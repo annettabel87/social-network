@@ -1,0 +1,30 @@
+.post {
+    background-color: #FFF;
+    box-shadow: 0px 8px 10px 3px rgba(34, 60, 80, 0.2);
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 24px;
+
+    & img {
+
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+
+    }
+}
+.like {
+    background-image: url('../../../../assets/like.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    padding: 0;
+    height: 40px;
+    width: 40px;
+    background-color: inherit;
+    position: absolute;
+    right: 40px;
+}

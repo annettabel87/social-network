@@ -1,0 +1,44 @@
+.myPosts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.avatarIcon {
+    width: 55px;
+    height: 55px;   
+    border-radius: 50%;
+}
+
+ .createPost {
+    background-color: #FFF;
+    box-shadow: 0px 8px 10px 3px rgba(34, 60, 80, 0.2);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+ }
+ .newPost {
+    background-color: #F2F3F5;
+    border: none;
+    border-radius: 20px;
+    width: 80%;
+    min-height: 40px;
+    padding: 8px;
+ }
+ .btn {
+    background-color: #F2F3F5;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 8px;
+    font-size: 45px;
+ }

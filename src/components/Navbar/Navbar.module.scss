@@ -1,0 +1,30 @@
+.navbarContainer {
+    grid-area: n;    
+}
+.navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 24px;
+}
+
+
+.item {
+    list-style: none;
+}
+.link {
+    color: #1c1e21;
+    text-decoration: none;  
+    display: flex;
+    align-items: center;
+    gap: 20px;     
+}
+ .icon {
+    width: 36px;
+    height: 36px;    
+ }
+ .profile {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+ }
