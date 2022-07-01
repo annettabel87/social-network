@@ -1,0 +1,16 @@
+.dialog {
+    font-size: 21px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: all ease-in-out 0.3s;
+}
+.dialog:hover {
+    background-color: rgba(89, 94, 100, 0.15);
+}
+.dialogLink {
+    text-decoration: none;
+    color: inherit;
+}
+.active {
+    background-color: rgba(45, 136, 255, 0.1);
+}

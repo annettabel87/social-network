@@ -1,21 +1,19 @@
 import React, { FC } from 'react';
-import avatar from '../../assets/ava.jpg';
+import { IPost } from '../../redux/state';
 import MyPosts from './MyPosts/MyPosts';
 import s from './Profile.module.scss';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
-const Profile: FC = () => {
+interface IProfileProps {
+  state: {
+    posts: IPost[];
+  };
+}
+const Profile: FC<IProfileProps> = (props) => {
   return (
     <section className={s.profile}>
-      <div className={s.info}>
-        <div className={s.ava}>
-          <img alt="avatar" src={avatar} className={s.avatarImg} />
-        </div>
-        <div className={s.description}>
-          <p>Anna Repeshko</p>
-          <p>Russia</p>
-        </div>
-      </div>
-      <MyPosts />
+      <ProfileInfo />
+      <MyPosts posts={props.state.posts} />
     </section>
   );
 };

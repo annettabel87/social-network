@@ -1,9 +1,16 @@
 import React, { FC } from 'react';
 import avatar from '../../../assets/ava.jpg';
+import { IPost } from '../../../redux/state';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
 
-const MyPosts: FC = () => {
+interface IMyPostsprops {
+  posts: IPost[];
+}
+const MyPosts: FC<IMyPostsprops> = (props) => {
+  const postElements = props.posts.map((post) => (
+    <Post message={post.post} key={post.id} likeCount={post.likeCount} />
+  ));
   return (
     <div className={s.myPosts}>
       <div className={s.createPost}>
@@ -11,12 +18,7 @@ const MyPosts: FC = () => {
         <textarea name="newPost" className={s.newPost} />
         <button className={s.btn}>+</button>
       </div>
-      <div className={s.posts}>
-        <Post message="Hello" />
-        <Post message="My post 1" />
-        <Post message="My post 2" />
-        <Post message="My post 3" />
-      </div>
+      <div className={s.posts}>{postElements}</div>
     </div>
   );
 };

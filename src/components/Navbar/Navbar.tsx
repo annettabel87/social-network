@@ -6,46 +6,47 @@ import music from '../../assets/music.svg';
 import settings from '../../assets/settings.svg';
 import friends from '../../assets/friends.png';
 import s from './Navbar.module.scss';
+import { NavLink } from 'react-router-dom';
 
 const Navbar: FC = () => {
   return (
     <nav className={s.navbarContainer}>
       <ul className={s.navbar}>
         <li className={s.item}>
-          <a href="#" className={s.link}>
+          <NavLink to="/profile" className={({ isActive }) => (isActive ? s.active : s.link)}>
             <img src={avatar} alt="avatar" className={`${s.icon} ${s.profile}`} />
             <p>Profile</p>
-          </a>
+          </NavLink>
         </li>
         <li className={s.item}>
-          <a href="#" className={s.link}>
+          <NavLink to="/dialogs" className={s.link}>
             <img src={messages} alt="messages" className={s.icon} />
             <p>Messages</p>
-          </a>
+          </NavLink>
         </li>
         <li className={s.item}>
-          <a href="#" className={`${s.link} ${s.news}`}>
+          <NavLink to="/news" className={`${s.link} ${s.news}`}>
             <img src={news} alt="news" className={s.icon} />
             <p>News</p>
-          </a>
+          </NavLink>
         </li>
         <li className={s.item}>
-          <a href="#" className={`${s.link} ${s.music}`}>
+          <NavLink to="/music" className={`${s.link} ${s.music}`}>
             <img src={music} alt="music" className={s.icon} />
             <p>Music</p>
-          </a>
+          </NavLink>
         </li>
         <li className={s.item}>
-          <a href="#" className={`${s.link} ${s.settings}`}>
+          <NavLink to="/settings" className={`${s.link} ${s.settings}`}>
             <img src={settings} alt="settings" className={s.icon} />
             <p>Settings</p>
-          </a>
+          </NavLink>
         </li>
         <li className={s.item}>
-          <a href="#" className={`${s.link} ${s.friends}`}>
+          <NavLink to="/friends" className={`${s.link} ${s.friends}`}>
             <img src={friends} alt="friends" className={s.icon} />
             <p>Friends</p>
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>
