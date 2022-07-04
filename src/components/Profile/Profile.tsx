@@ -7,13 +7,20 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 interface IProfileProps {
   state: {
     posts: IPost[];
+    newPostText: string;
   };
+  addPost: () => void;
+  updateNewPosText: (newText: string) => void;
 }
 const Profile: FC<IProfileProps> = (props) => {
   return (
     <section className={s.profile}>
       <ProfileInfo />
-      <MyPosts posts={props.state.posts} />
+      <MyPosts
+        state={props.state}
+        addPost={props.addPost}
+        updateNewPosText={props.updateNewPosText}
+      />
     </section>
   );
 };

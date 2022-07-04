@@ -12,6 +12,8 @@ import Friends from './components/Friends/Friends';
 import { IState } from './redux/state';
 
 interface IAppPops {
+  updateNewPostText: (newText: string) => void;
+  addPost: () => void;
   state: IState;
 }
 const App: FC<IAppPops> = (props) => {
@@ -21,7 +23,16 @@ const App: FC<IAppPops> = (props) => {
       <Navbar />
       <main className={s.main}>
         <Routes>
-          <Route path="profile" element={<Profile state={props.state.profilePage} />} />
+          <Route
+            path="profile"
+            element={
+              <Profile
+                state={props.state.profilePage}
+                addPost={props.addPost}
+                updateNewPosText={props.updateNewPostText}
+              />
+            }
+          />
           <Route path="dialogs/*" element={<Dialogs state={props.state.dialogPage} />} />
           <Route path="news" element={<News />} />
           <Route path="music" element={<Music />} />
