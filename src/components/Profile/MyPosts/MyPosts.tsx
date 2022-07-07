@@ -1,28 +1,21 @@
 import React, { FC } from 'react';
 import avatar from '../../../assets/ava.jpg';
-import { IPost } from '../../../redux/state';
+import { IMyPostsprops } from '../../../interfaces';
+import { addPostCreator, updateNewTextCreator } from '../../../redux/profileReducer';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
 
-interface IMyPostsprops {
-  state: {
-    posts: IPost[];
-    newPostText: string;
-  };
-  addPost: () => void;
-  updateNewPosText: (newText: string) => void;
-}
 const MyPosts: FC<IMyPostsprops> = (props) => {
   const postElements = props.state.posts.map((post) => (
     <Post message={post.post} key={post.id} likeCount={post.likeCount} />
   ));
   const newPostElement = React.createRef<HTMLTextAreaElement>();
   const addPost = () => {
-    props.addPost();
+    props.dispatch(addPostCreator());
   };
   const onPostChange = () => {
     const text = newPostElement.current ? newPostElement.current.value : '';
-    props.updateNewPosText(text);
+    props.dispatch(updateNewTextCreator(text));
   };
   return (
     <div className={s.myPosts}>

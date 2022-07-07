@@ -1,13 +1,9 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+import { IDialog } from '../../../interfaces';
 import s from './Dialog.module.scss';
 
-interface IDialogProps {
-  id: string;
-  name: string;
-}
-
-const Dialog: FC<IDialogProps> = (props) => {
+const Dialog: FC<IDialog> = (props) => {
   return (
     <div className={s.dialog}>
       <NavLink

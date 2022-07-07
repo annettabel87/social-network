@@ -9,13 +9,8 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import Friends from './components/Friends/Friends';
-import { IState } from './redux/state';
+import { IAppPops } from './interfaces';
 
-interface IAppPops {
-  updateNewPostText: (newText: string) => void;
-  addPost: () => void;
-  state: IState;
-}
 const App: FC<IAppPops> = (props) => {
   return (
     <div className={s.App}>
@@ -25,15 +20,12 @@ const App: FC<IAppPops> = (props) => {
         <Routes>
           <Route
             path="profile"
-            element={
-              <Profile
-                state={props.state.profilePage}
-                addPost={props.addPost}
-                updateNewPosText={props.updateNewPostText}
-              />
-            }
+            element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />}
           />
-          <Route path="dialogs/*" element={<Dialogs state={props.state.dialogPage} />} />
+          <Route
+            path="dialogs/*"
+            element={<Dialogs state={props.state.dialogPage} dispatch={props.dispatch} />}
+          />
           <Route path="news" element={<News />} />
           <Route path="music" element={<Music />} />
           <Route path="settings" element={<Settings />} />

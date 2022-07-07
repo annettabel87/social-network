@@ -1,26 +1,6 @@
-export interface IState {
-  profilePage: {
-    posts: IPost[];
-    newPostText: string;
-  };
-  dialogPage: {
-    dialogs: IDialog[];
-    messages: IMessage[];
-  };
-}
-export interface IDialog {
-  id: number;
-  name: string;
-}
-export interface IMessage {
-  id: number;
-  message: string;
-}
-export interface IPost {
-  id: number;
-  post: string;
-  likeCount: number;
-}
+import { IState, IActionType } from '../interfaces';
+import dialogsReducer from './dialogsReducer';
+import profileReducer from './profileReducer';
 
 const store = {
   _state: {
@@ -45,6 +25,7 @@ const store = {
         { id: 2, message: 'Hello world' },
         { id: 3, message: 'How are you?' },
       ],
+      newMessageBody: '',
     },
   },
   getState() {
@@ -53,22 +34,13 @@ const store = {
   _callSubscriber(state: IState | null) {
     console.log(state);
   },
-  addPost() {
-    const newPost: IPost = {
-      id: 5,
-      post: this._state.profilePage.newPostText,
-      likeCount: 0,
-    };
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = '';
-    this._callSubscriber(this._state);
-  },
-  updateNewPostText(newText: string) {
-    this._state.profilePage.newPostText = newText;
-    this._callSubscriber(this._state);
-  },
   subscribe(observer: () => void) {
     this._callSubscriber = observer;
+  },
+  dispatch(action: IActionType) {
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogPage = dialogsReducer(this._state.dialogPage, action);
+    this._callSubscriber(this._state);
   },
 };
 

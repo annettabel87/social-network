@@ -1,22 +1,24 @@
 import React, { FC } from 'react';
-import { IDialog, IMessage } from '../../redux/state';
+import { IDialogsProps } from '../../interfaces';
+import { updateNewMessageCreator, sendMessagetCreator } from '../../redux/dialogsReducer';
 import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.scss';
 import Message from './Message/Message';
 
-interface IDialogsProps {
-  state: {
-    dialogs: IDialog[];
-    messages: IMessage[];
-  };
-}
 const Dialogs: FC<IDialogsProps> = (props) => {
   const dialogElements = props.state.dialogs.map((dialog) => (
-    <Dialog id={dialog.id.toString()} name={dialog.name} key={dialog.id} />
+    <Dialog id={dialog.id} name={dialog.name} key={dialog.id} />
   ));
   const messageElements = props.state.messages.map((message) => (
     <Message text={message.message} key={message.id} />
   ));
+  const onChangeMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const body = e.target ? e.target.value : '';
+    props.dispatch(updateNewMessageCreator(body));
+  };
+  const sendMessage = () => {
+    props.dispatch(sendMessagetCreator());
+  };
   return (
     <section className={s.dialogs}>
       <div className={s.dialogsWrapper}>
@@ -25,7 +27,18 @@ const Dialogs: FC<IDialogsProps> = (props) => {
       </div>
       <div className={s.messagesWrapper}>
         <h3 className={s.title}>Name</h3>
-        {messageElements}
+        <div className={s.messageBlock}>{messageElements}</div>
+        <div className={s.newMessage}>
+          <textarea
+            className={s.newMessageInput}
+            placeholder="input your message"
+            value={props.state.newMessageBody}
+            onChange={onChangeMessageText}
+          ></textarea>
+          <button className={s.btn} onClick={sendMessage}>
+            send
+          </button>
+        </div>
       </div>
     </section>
   );

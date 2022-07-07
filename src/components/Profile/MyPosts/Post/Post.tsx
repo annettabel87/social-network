@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
 import avatar from '../../../../assets/ava.jpg';
+import { IPostProps } from '../../../../interfaces';
 import s from './Post.module.scss';
-
-interface IPostProps {
-  message: string;
-  likeCount: number;
-}
 
 const Post: FC<IPostProps> = (props) => {
   return (
