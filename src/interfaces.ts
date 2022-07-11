@@ -24,6 +24,10 @@ export interface IState {
   profilePage: IProfileState;
   dialogPage: IDialogsState;
 }
+export interface IReduxState {
+  dialogsReducer: IDialogsState;
+  profileReducer: IProfileState;
+}
 export interface IActionType {
   type: string;
   newText?: string;
@@ -50,5 +54,5 @@ export interface IPostProps {
 }
 export interface IAppPops {
   dispatch: (action: IActionType) => void;
-  state: IState;
+  state: IReduxState;
 }

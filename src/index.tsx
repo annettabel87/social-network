@@ -4,11 +4,12 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import store from './redux/state';
-import { IState } from './interfaces';
+import store from './redux/reduxStore';
+import { IReduxState } from './interfaces';
+import { EmptyObject } from 'redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-const rerenderTree = (state: IState) => {
+const rerenderTree = (state: EmptyObject & IReduxState) => {
   root.render(
     <React.StrictMode>
       <BrowserRouter>
@@ -19,6 +20,9 @@ const rerenderTree = (state: IState) => {
 };
 
 rerenderTree(store.getState());
-store.subscribe(() => rerenderTree(store.getState()));
+store.subscribe(() => {
+  const state = store.getState();
+  rerenderTree(state);
+});
 
 reportWebVitals();

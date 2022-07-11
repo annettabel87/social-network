@@ -11,8 +11,16 @@ export const updateNewTextCreator = (text: string) => ({
   type: UPDATE_NEW_POST_TEXT,
   newText: text,
 });
-
-const profileReducer = (state: IProfileState, action: IActionType) => {
+const initialState = {
+  posts: [
+    { id: 1, post: 'Hello', likeCount: 4 },
+    { id: 2, post: 'My post 1', likeCount: 2 },
+    { id: 3, post: 'My post 2', likeCount: 56 },
+    { id: 4, post: 'My post 3', likeCount: 100 },
+  ],
+  newPostText: '',
+};
+const profileReducer = (state: IProfileState = initialState, action: IActionType) => {
   switch (action.type) {
     case ADD_POST:
       const newPost: IPost = {

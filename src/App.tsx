@@ -20,11 +20,11 @@ const App: FC<IAppPops> = (props) => {
         <Routes>
           <Route
             path="profile"
-            element={<Profile state={props.state.profilePage} dispatch={props.dispatch} />}
+            element={<Profile state={props.state.profileReducer} dispatch={props.dispatch} />}
           />
           <Route
             path="dialogs/*"
-            element={<Dialogs state={props.state.dialogPage} dispatch={props.dispatch} />}
+            element={<Dialogs state={props.state.dialogsReducer} dispatch={props.dispatch} />}
           />
           <Route path="news" element={<News />} />
           <Route path="music" element={<Music />} />
