@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import { IProfileProps } from '../../interfaces';
-import MyPosts from './MyPosts/MyPosts';
-import s from './Profile.module.scss';
+import { IAppPops } from '../../interfaces';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
+import s from './Profile.module.scss';
 
-const Profile: FC<IProfileProps> = (props) => {
+const Profile: FC<IAppPops> = (props) => {
   return (
     <section className={s.profile}>
       <ProfileInfo />
-      <MyPosts state={props.state} dispatch={props.dispatch} />
+      <MyPostsContainer store={props.store} />
     </section>
   );
 };

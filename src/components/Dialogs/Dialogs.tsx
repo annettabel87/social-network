@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { IDialogsProps } from '../../interfaces';
-import { updateNewMessageCreator, sendMessagetCreator } from '../../redux/dialogsReducer';
 import Dialog from './Dialog/Dialog';
-import s from './Dialogs.module.scss';
 import Message from './Message/Message';
+import s from './Dialogs.module.scss';
 
 const Dialogs: FC<IDialogsProps> = (props) => {
   const dialogElements = props.state.dialogs.map((dialog) => (
@@ -14,10 +13,10 @@ const Dialogs: FC<IDialogsProps> = (props) => {
   ));
   const onChangeMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const body = e.target ? e.target.value : '';
-    props.dispatch(updateNewMessageCreator(body));
+    props.updateNewMessage(body);
   };
   const sendMessage = () => {
-    props.dispatch(sendMessagetCreator());
+    props.sendMessage();
   };
   return (
     <section className={s.dialogs}>

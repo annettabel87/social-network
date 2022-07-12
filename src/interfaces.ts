@@ -1,3 +1,5 @@
+import { Store, EmptyObject } from 'redux';
+
 export interface IProfileState {
   posts: IPost[];
   newPostText: string;
@@ -35,24 +37,29 @@ export interface IActionType {
 }
 export interface IDialogsProps {
   state: IDialogsState;
-  dispatch: (action: IActionType) => void;
+  sendMessage: () => void;
+  updateNewMessage: (body: string) => void;
 }
 export interface IMessageProps {
   text: string;
 }
-export interface IProfileProps {
-  state: IProfileState;
-  dispatch: (action: IActionType) => void;
-}
+
 export interface IMyPostsprops {
-  state: IProfileState;
-  dispatch: (action: IActionType) => void;
+  posts: IPost[];
+  newPostText: string;
+  addPost: () => void;
+  updateNewTextCreator: (text: string) => void;
 }
 export interface IPostProps {
   message: string;
   likeCount: number;
 }
 export interface IAppPops {
-  dispatch: (action: IActionType) => void;
-  state: IReduxState;
+  store: Store<
+    EmptyObject & {
+      dialogsReducer: IDialogsState;
+      profileReducer: IProfileState;
+    },
+    IActionType
+  >;
 }
