@@ -1,23 +1,28 @@
 import React, { FC } from 'react';
-import { IAppPops } from '../../../interfaces';
 import { addPostCreator, updateNewTextCreator } from '../../../redux/profileReducer';
+import StoreContext from '../../../storeContext';
 import MyPosts from './MyPosts';
 
-const MyPostsContainer: FC<IAppPops> = (props) => {
-  const state = props.store.getState();
-  const addPost = () => {
-    props.store.dispatch(addPostCreator());
-  };
-  const postChange = (text: string) => {
-    props.store.dispatch(updateNewTextCreator(text));
-  };
+const MyPostsContainer: FC = () => {
   return (
-    <MyPosts
-      addPost={addPost}
-      updateNewTextCreator={postChange}
-      posts={state.profileReducer.posts}
-      newPostText={state.profileReducer.newPostText}
-    />
+    <StoreContext.Consumer>
+      {(value) => {
+        const addPost = () => {
+          value.dispatch(addPostCreator());
+        };
+        const postChange = (text: string) => {
+          value.dispatch(updateNewTextCreator(text));
+        };
+        return (
+          <MyPosts
+            addPost={addPost}
+            updateNewTextCreator={postChange}
+            posts={value.getState().profileReducer.posts}
+            newPostText={value.getState().profileReducer.newPostText}
+          />
+        );
+      }}
+    </StoreContext.Consumer>
   );
 };
 

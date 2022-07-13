@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
-import { IAppPops } from '../../interfaces';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import s from './Profile.module.scss';
 
-const Profile: FC<IAppPops> = (props) => {
+const Profile: FC = () => {
   return (
     <section className={s.profile}>
       <ProfileInfo />
-      <MyPostsContainer store={props.store} />
+      <MyPostsContainer />
     </section>
   );
 };
