@@ -1,28 +1,29 @@
-import React, { FC } from 'react';
+import { Dispatch, EmptyObject } from 'redux';
+import { connect } from 'react-redux';
+import { IActionType, IDialogsState, IProfileState } from '../../interfaces';
 import { updateNewMessageCreator, sendMessagetCreator } from '../../redux/dialogsReducer';
-import StoreContext from '../../storeContext';
 import Dialogs from './Dialogs';
 
-const DialogsContainer: FC = () => {
-  return (
-    <StoreContext.Consumer>
-      {(value) => {
-        const onChangeMessageText = (body: string) => {
-          value.dispatch(updateNewMessageCreator(body));
-        };
-        const sendMessage = () => {
-          value.dispatch(sendMessagetCreator());
-        };
-        return (
-          <Dialogs
-            state={value.getState().dialogsReducer}
-            sendMessage={sendMessage}
-            updateNewMessage={onChangeMessageText}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapState = (
+  state: EmptyObject & {
+    dialogsReducer: IDialogsState;
+    profileReducer: IProfileState;
+  }
+) => {
+  return {
+    state: state.dialogsReducer,
+  };
 };
 
+const mapDispatch = (dispatch: Dispatch<IActionType>) => {
+  return {
+    sendMessage: () => {
+      dispatch(sendMessagetCreator());
+    },
+    updateNewMessage: (body: string) => {
+      dispatch(updateNewMessageCreator(body));
+    },
+  };
+};
+const DialogsContainer = connect(mapState, mapDispatch)(Dialogs);
 export default DialogsContainer;

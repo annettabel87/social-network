@@ -1,29 +1,31 @@
-import React, { FC } from 'react';
+import { connect } from 'react-redux';
+import { EmptyObject, Dispatch } from 'redux';
+import { IDialogsState, IProfileState, IActionType } from '../../../interfaces';
 import { addPostCreator, updateNewTextCreator } from '../../../redux/profileReducer';
-import StoreContext from '../../../storeContext';
+
 import MyPosts from './MyPosts';
 
-const MyPostsContainer: FC = () => {
-  return (
-    <StoreContext.Consumer>
-      {(value) => {
-        const addPost = () => {
-          value.dispatch(addPostCreator());
-        };
-        const postChange = (text: string) => {
-          value.dispatch(updateNewTextCreator(text));
-        };
-        return (
-          <MyPosts
-            addPost={addPost}
-            updateNewTextCreator={postChange}
-            posts={value.getState().profileReducer.posts}
-            newPostText={value.getState().profileReducer.newPostText}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapState = (
+  state: EmptyObject & {
+    dialogsReducer: IDialogsState;
+    profileReducer: IProfileState;
+  }
+) => {
+  return {
+    posts: state.profileReducer.posts,
+    newPostText: state.profileReducer.newPostText,
+  };
 };
 
+const mapDispatch = (dispatch: Dispatch<IActionType>) => {
+  return {
+    addPost: () => {
+      dispatch(addPostCreator());
+    },
+    updateNewTextCreator: (text: string) => {
+      dispatch(updateNewTextCreator(text));
+    },
+  };
+};
+const MyPostsContainer = connect(mapState, mapDispatch)(MyPosts);
 export default MyPostsContainer;
