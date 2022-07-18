@@ -29,11 +29,16 @@ export interface IState {
 export interface IReduxState {
   dialogsReducer: IDialogsState;
   profileReducer: IProfileState;
+  usersReducer: IUsersState;
 }
 export interface IActionType {
   type: string;
   newText?: string;
   body?: string;
+  userId?: number;
+  users?: IUser[];
+  usersCount?: number;
+  currentPage?: number;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -59,7 +64,22 @@ export interface IAppPops {
     EmptyObject & {
       dialogsReducer: IDialogsState;
       profileReducer: IProfileState;
+      usersReducer: IUsersState;
     },
     IActionType
   >;
+}
+export interface IUsersState {
+  users: IUser[];
+  pageSize: number;
+  currentPage: number;
+  usersCount: number;
+}
+export interface IUser {
+  name: string;
+  id: number;
+  uniqueUrlName: string;
+  photos: { small: string; large: string };
+  followed: boolean;
+  status: string;
 }

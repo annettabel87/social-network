@@ -43,9 +43,9 @@ const Navbar: FC = () => {
           </NavLink>
         </li>
         <li className={s.item}>
-          <NavLink to="/friends" className={`${s.link} ${s.friends}`}>
-            <img src={friends} alt="friends" className={s.icon} />
-            <p>Friends</p>
+          <NavLink to="/users" className={`${s.link} ${s.users}`}>
+            <img src={friends} alt="users" className={s.icon} />
+            <p>Users</p>
           </NavLink>
         </li>
       </ul>
