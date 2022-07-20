@@ -1,13 +1,13 @@
 import React from 'react';
-import { Dispatch, EmptyObject } from 'redux';
+import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import { IActionType, IDialogsState, IProfileState, IUser, IUsersState } from '../../interfaces';
+import { IDialogsState, IProfileState, IUser, IUsersState } from '../../interfaces';
 import {
-  setCurrentPageCreator,
-  setUsersCountCreator,
-  setUsersCreator,
-  toggleFollowCreator,
-  toggleIsFetchingCreator,
+  setCurrentPage,
+  setUsersCount,
+  setUsers,
+  toggleFollow,
+  toggleIsFetching,
 } from '../../redux/usersReducer';
 import axios from 'axios';
 import Users from './Users';
@@ -42,25 +42,25 @@ const mapState = (
   };
 };
 
-const mapDispatch = (dispatch: Dispatch<IActionType>) => {
-  return {
-    toggleFollow: (userId: number) => {
-      dispatch(toggleFollowCreator(userId));
-    },
-    setUsers: (users: IUser[]) => {
-      dispatch(setUsersCreator(users));
-    },
-    setCurrentPage: (page: number) => {
-      dispatch(setCurrentPageCreator(page));
-    },
-    setUsersCount: (usersCount: number) => {
-      dispatch(setUsersCountCreator(usersCount));
-    },
-    toggleIsFetching: (isFetching: boolean) => {
-      dispatch(toggleIsFetchingCreator(isFetching));
-    },
-  };
-};
+// const mapDispatch = (dispatch: Dispatch<IActionType>) => {
+//   return {
+//     toggleFollow: (userId: number) => {
+//       dispatch(toggleFollowCreator(userId));
+//     },
+//     setUsers: (users: IUser[]) => {
+//       dispatch(setUsersCreator(users));
+//     },
+//     setCurrentPage: (page: number) => {
+//       dispatch(setCurrentPageCreator(page));
+//     },
+//     setUsersCount: (usersCount: number) => {
+//       dispatch(setUsersCountCreator(usersCount));
+//     },
+//     toggleIsFetching: (isFetching: boolean) => {
+//       dispatch(toggleIsFetchingCreator(isFetching));
+//     },
+//   };
+// };
 
 class UsersContainerComponent extends React.Component<IUsersContainerComponentProps> {
   componentDidMount() {
@@ -107,5 +107,11 @@ class UsersContainerComponent extends React.Component<IUsersContainerComponentPr
     );
   }
 }
-const UsersContainer = connect(mapState, mapDispatch)(UsersContainerComponent);
+const UsersContainer = connect(mapState, {
+  setCurrentPage,
+  setUsersCount,
+  setUsers,
+  toggleFollow,
+  toggleIsFetching,
+})(UsersContainerComponent);
 export default UsersContainer;
