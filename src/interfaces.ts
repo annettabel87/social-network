@@ -39,6 +39,7 @@ export interface IActionType {
   users?: IUser[];
   usersCount?: number;
   currentPage?: number;
+  isFetching?: boolean;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -74,6 +75,7 @@ export interface IUsersState {
   pageSize: number;
   currentPage: number;
   usersCount: number;
+  isFetching: boolean;
 }
 export interface IUser {
   name: string;

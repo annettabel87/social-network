@@ -4,6 +4,7 @@ const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 export const toggleFollowCreator = (userId: number) => ({
   type: TOGGLE_FOLLOW,
@@ -23,11 +24,17 @@ export const setCurrentPageCreator = (currentPage: number) => ({
   currentPage,
 });
 
+export const toggleIsFetchingCreator = (isFetching: boolean) => ({
+  type: TOGGLE_IS_FETCHING,
+  isFetching,
+});
+
 const initialState: IUsersState = {
   users: [],
   pageSize: 5,
   currentPage: 1,
   usersCount: 0,
+  isFetching: true,
 };
 const usersReducer = (state: IUsersState = initialState, action: IActionType) => {
   switch (action.type) {
@@ -63,6 +70,14 @@ const usersReducer = (state: IUsersState = initialState, action: IActionType) =>
         currentPage: action.currentPage,
       };
     }
+
+    case TOGGLE_IS_FETCHING: {
+      return {
+        ...state,
+        isFetching: action.isFetching,
+      };
+    }
+
     default:
       return state;
   }
