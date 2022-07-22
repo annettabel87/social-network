@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { IUser } from '../../interfaces';
 import s from './Users.module.scss';
 import userPhoto from '../../assets/user.png';
+import { NavLink } from 'react-router-dom';
 
 export interface IUsersProps {
   state: IUser[];
@@ -42,11 +43,13 @@ const Users: FC<IUsersProps> = (props: IUsersProps) => {
       {props.state.map((user) => (
         <div className={s.userWrapper} key={user.id}>
           <div className={s.avatarBlock}>
-            <img
-              src={user.photos.small !== null ? user.photos.small : userPhoto}
-              alt="avatar"
-              className={s.avatarIcon}
-            />
+            <NavLink to={`/profile/${user.id}`}>
+              <img
+                src={user.photos.small !== null ? user.photos.small : userPhoto}
+                alt="avatar"
+                className={s.avatarIcon}
+              />
+            </NavLink>
           </div>
           <div className={s.userInfo}>
             <p className={s.mainText}>{user.name}</p>

@@ -3,6 +3,29 @@ import { Store, EmptyObject } from 'redux';
 export interface IProfileState {
   posts: IPost[];
   newPostText: string;
+  profile: IProfile | null;
+}
+
+export interface IProfile {
+  aboutMe: string;
+  userId: number;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  contacts: {
+    github: string;
+    vk: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    website: string;
+    youtube: string;
+    mainLink: string;
+  };
+  photos: {
+    small: string;
+    large: string;
+  };
 }
 export interface IPost {
   id: number;
@@ -40,6 +63,7 @@ export interface IActionType {
   usersCount?: number;
   currentPage?: number;
   isFetching?: boolean;
+  profile?: IProfile;
 }
 export interface IDialogsProps {
   state: IDialogsState;

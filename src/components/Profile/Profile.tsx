@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
+import ProfileInfo, { IProfileProps } from './ProfileInfo/ProfileInfo';
 import s from './Profile.module.scss';
 
-const Profile: FC = () => {
+const Profile: FC<IProfileProps> = (props) => {
+  // debugger;
   return (
     <section className={s.profile}>
-      <ProfileInfo />
+      <ProfileInfo profile={props.profile} />
       <MyPostsContainer />
     </section>
   );

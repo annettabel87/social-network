@@ -1,7 +1,8 @@
-import { IProfileState, IActionType, IPost } from '../interfaces';
+import { IProfileState, IActionType, IPost, IProfile } from '../interfaces';
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 export const addPostCreator = () => ({
   type: ADD_POST,
@@ -11,6 +12,11 @@ export const updateNewTextCreator = (text: string) => ({
   type: UPDATE_NEW_POST_TEXT,
   newText: text,
 });
+
+export const setUserProfile = (profile: IProfile | null) => ({
+  type: SET_USER_PROFILE,
+  profile: profile,
+});
 const initialState = {
   posts: [
     { id: 1, post: 'Hello', likeCount: 4 },
@@ -19,6 +25,7 @@ const initialState = {
     { id: 4, post: 'My post 3', likeCount: 100 },
   ],
   newPostText: '',
+  profile: null,
 };
 const profileReducer = (state: IProfileState = initialState, action: IActionType) => {
   switch (action.type) {
@@ -39,6 +46,13 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
       return {
         ...state,
         newPostText: action.newText ? action.newText : '',
+      };
+    }
+
+    case SET_USER_PROFILE: {
+      return {
+        ...state,
+        profile: action.profile,
       };
     }
 
