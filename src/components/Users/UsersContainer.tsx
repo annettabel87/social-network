@@ -1,7 +1,13 @@
 import React from 'react';
 import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import { IDialogsState, IProfileState, IUser, IUsersState } from '../../interfaces';
+import {
+  IAuthState,
+  IDialogsState,
+  IProfileState,
+  IUsersContainerComponentProps,
+  IUsersState,
+} from '../../interfaces';
 import {
   setCurrentPage,
   setUsersCount,
@@ -13,24 +19,12 @@ import axios from 'axios';
 import Users from './Users';
 import Preloader from '../../common/Preloader/Preloader';
 
-export interface IUsersContainerComponentProps {
-  state: IUser[];
-  pageSize: number;
-  currentPage: number;
-  usersCount: number;
-  isFetching: boolean;
-  toggleFollow: (userId: number) => void;
-  setUsers: (users: IUser[]) => void;
-  setCurrentPage: (page: number) => void;
-  setUsersCount: (usersCount: number) => void;
-  toggleIsFetching: (isFetching: boolean) => void;
-}
-
 const mapState = (
   state: EmptyObject & {
     dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
     usersReducer: IUsersState;
+    authReducer: IAuthState;
   }
 ) => {
   return {

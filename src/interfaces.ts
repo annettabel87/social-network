@@ -1,3 +1,4 @@
+import { Params } from 'react-router-dom';
 import { Store, EmptyObject } from 'redux';
 
 export interface IProfileState {
@@ -64,6 +65,7 @@ export interface IActionType {
   currentPage?: number;
   isFetching?: boolean;
   profile?: IProfile;
+  data?: IUserData;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -108,4 +110,46 @@ export interface IUser {
   photos: { small: string; large: string };
   followed: boolean;
   status: string;
+}
+export interface IUserData {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+}
+export interface IAuthState {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+  isFetching: boolean;
+  isAuth: boolean;
+}
+export interface IAuthContainerProps {
+  id: number | null;
+  email: string | null;
+  login: string | null;
+  isFetching: boolean;
+  isAuth: boolean;
+  setUserData: (data: IUserData) => void;
+  toggleIsFetching: (isFetching: boolean) => void;
+}
+export interface IWithRouterProps {
+  state: IProfileState;
+  setUserProfile: (profile: IProfile) => void;
+  params: Readonly<Params<string>>;
+}
+export interface IProfileContainerComponentProps {
+  state: IProfileState;
+  setUserProfile: (profile: IProfile) => void;
+}
+export interface IUsersContainerComponentProps {
+  state: IUser[];
+  pageSize: number;
+  currentPage: number;
+  usersCount: number;
+  isFetching: boolean;
+  toggleFollow: (userId: number) => void;
+  setUsers: (users: IUser[]) => void;
+  setCurrentPage: (page: number) => void;
+  setUsersCount: (usersCount: number) => void;
+  toggleIsFetching: (isFetching: boolean) => void;
 }
