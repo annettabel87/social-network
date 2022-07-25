@@ -61,7 +61,13 @@ class UsersContainerComponent extends React.Component<IUsersContainerComponentPr
     this.props.toggleIsFetching(true);
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
+        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
+        {
+          withCredentials: true,
+          headers: {
+            'API-KEY': '42efb32e-8721-4e68-a9c0-3be6237fc846',
+          },
+        }
       )
       .then((response) => {
         this.props.toggleIsFetching(false);
