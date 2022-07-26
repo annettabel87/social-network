@@ -3,7 +3,7 @@ import { IUser } from '../../interfaces';
 import s from './Users.module.scss';
 import userPhoto from '../../assets/user.png';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { userAPI } from '../../API/Api';
 
 export interface IUsersProps {
   state: IUser[];
@@ -59,35 +59,17 @@ const Users: FC<IUsersProps> = (props: IUsersProps) => {
               className={user.followed ? `${s.btn} ${s.follow}` : `${s.btn} ${s.unfollow}`}
               onClick={() => {
                 if (!user.followed) {
-                  axios
-                    .post(
-                      `https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                      {},
-                      {
-                        withCredentials: true,
-                        headers: {
-                          'API-KEY': '42efb32e-8721-4e68-a9c0-3be6237fc846',
-                        },
-                      }
-                    )
-                    .then((response) => {
-                      if (response.data.resultCode == 0) {
-                        props.toggleFollow(user.id);
-                      }
-                    });
+                  userAPI.followUser(user.id).then((response) => {
+                    if (response.resultCode == 0) {
+                      props.toggleFollow(user.id);
+                    }
+                  });
                 } else {
-                  axios
-                    .delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                      withCredentials: true,
-                      headers: {
-                        'API-KEY': '42efb32e-8721-4e68-a9c0-3be6237fc846',
-                      },
-                    })
-                    .then((response) => {
-                      if (response.data.resultCode == 0) {
-                        props.toggleFollow(user.id);
-                      }
-                    });
+                  userAPI.unfollowUser(user.id).then((response) => {
+                    if (response.resultCode == 0) {
+                      props.toggleFollow(user.id);
+                    }
+                  });
                 }
               }}
             >
