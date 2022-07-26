@@ -10,8 +10,10 @@ export interface IUsersProps {
   pageSize: number;
   currentPage: number;
   usersCount: number;
+  followingInProgress: number[];
   toggleFollow: (userId: number) => void;
   onChangedPage: (page: number) => void;
+  toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
 }
 const Users: FC<IUsersProps> = (props: IUsersProps) => {
   const pagesCount = Math.ceil(props.usersCount / props.pageSize);
@@ -56,19 +58,24 @@ const Users: FC<IUsersProps> = (props: IUsersProps) => {
             <p className={s.mainText}>{user.name}</p>
             <p className={s.text}>{user.status}</p>
             <button
+              disabled={props.followingInProgress.some((id) => id === user.id)}
               className={user.followed ? `${s.btn} ${s.follow}` : `${s.btn} ${s.unfollow}`}
               onClick={() => {
                 if (!user.followed) {
+                  props.toggleIsFollowingInProgress(user.id, true);
                   userAPI.followUser(user.id).then((response) => {
                     if (response.resultCode == 0) {
                       props.toggleFollow(user.id);
                     }
+                    props.toggleIsFollowingInProgress(user.id, false);
                   });
                 } else {
+                  props.toggleIsFollowingInProgress(user.id, true);
                   userAPI.unfollowUser(user.id).then((response) => {
                     if (response.resultCode == 0) {
                       props.toggleFollow(user.id);
                     }
+                    props.toggleIsFollowingInProgress(user.id, false);
                   });
                 }
               }}

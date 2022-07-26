@@ -14,6 +14,7 @@ import {
   setUsers,
   toggleFollow,
   toggleIsFetching,
+  toggleIsFollowingInProgress,
 } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../../common/Preloader/Preloader';
@@ -33,6 +34,7 @@ const mapState = (
     currentPage: state.usersReducer.currentPage,
     usersCount: state.usersReducer.usersCount,
     isFetching: state.usersReducer.isFetching,
+    followingInProgress: state.usersReducer.followingInProgress,
   };
 };
 
@@ -89,6 +91,8 @@ class UsersContainerComponent extends React.Component<IUsersContainerComponentPr
             usersCount={this.props.usersCount}
             toggleFollow={this.props.toggleFollow}
             onChangedPage={this.onChangedPage}
+            followingInProgress={this.props.followingInProgress}
+            toggleIsFollowingInProgress={this.props.toggleIsFollowingInProgress}
           />
         )}
       </>
@@ -101,5 +105,6 @@ const UsersContainer = connect(mapState, {
   setUsers,
   toggleFollow,
   toggleIsFetching,
+  toggleIsFollowingInProgress,
 })(UsersContainerComponent);
 export default UsersContainer;

@@ -102,6 +102,7 @@ export interface IUsersState {
   currentPage: number;
   usersCount: number;
   isFetching: boolean;
+  followingInProgress: number[];
 }
 export interface IUser {
   name: string;
@@ -147,9 +148,11 @@ export interface IUsersContainerComponentProps {
   currentPage: number;
   usersCount: number;
   isFetching: boolean;
+  followingInProgress: number[];
   toggleFollow: (userId: number) => void;
   setUsers: (users: IUser[]) => void;
   setCurrentPage: (page: number) => void;
   setUsersCount: (usersCount: number) => void;
   toggleIsFetching: (isFetching: boolean) => void;
+  toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
 }
