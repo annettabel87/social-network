@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUser } from '../interfaces';
+import { IProfile, IUser, IUserData } from '../interfaces';
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -14,6 +14,10 @@ export interface IGetUsersData {
   items: IUser[];
   totalCount: number;
 }
+export interface IAuthData {
+  data: IUserData;
+  resultCode: number;
+}
 export const userAPI = {
   getUsers(currentPage: number, pageSize: number): Promise<IGetUsersData> {
     return instance
@@ -25,6 +29,12 @@ export const userAPI = {
   },
   unfollowUser(userId: number): Promise<IFollowUserData> {
     return instance.delete(`follow/${userId}`).then((response) => response.data);
+  },
+  getUserPage(userId: number): Promise<IProfile> {
+    return instance.get(`profile/${userId}`).then((response) => response.data);
+  },
+  getAuthUserInfo(): Promise<IAuthData> {
+    return instance.get(`auth/me`).then((response) => response.data);
   },
 };
 export interface IFollowUserData {

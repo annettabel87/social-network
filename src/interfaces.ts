@@ -130,17 +130,16 @@ export interface IAuthContainerProps {
   login: string | null;
   isFetching: boolean;
   isAuth: boolean;
-  setUserData: (data: IUserData) => void;
-  toggleIsFetching: (isFetching: boolean) => void;
+  getAuthInfo: () => void;
 }
 export interface IWithRouterProps {
   state: IProfileState;
-  setUserProfile: (profile: IProfile) => void;
   params: Readonly<Params<string>>;
+  getUserPage: (userId: number) => void;
 }
 export interface IProfileContainerComponentProps {
   state: IProfileState;
-  setUserProfile: (profile: IProfile) => void;
+  getUserPage: (userId: number) => void;
 }
 export interface IUsersContainerComponentProps {
   state: IUser[];

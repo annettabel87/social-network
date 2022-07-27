@@ -4,7 +4,6 @@ import ProfileInfo, { IProfileProps } from './ProfileInfo/ProfileInfo';
 import s from './Profile.module.scss';
 
 const Profile: FC<IProfileProps> = (props) => {
-  // debugger;
   return (
     <section className={s.profile}>
       <ProfileInfo profile={props.profile} />

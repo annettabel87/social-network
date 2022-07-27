@@ -9,8 +9,7 @@ import {
   IWithRouterProps,
 } from '../../interfaces';
 import Profile from './Profile';
-import axios from 'axios';
-import { setUserProfile } from '../../redux/profileReducer';
+import { getUserPage } from '../../redux/profileReducer';
 import { useParams } from 'react-router-dom';
 
 const mapState = (
@@ -36,9 +35,7 @@ export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) =>
 class ProfileContainerComponent extends React.Component<IWithRouterProps> {
   componentDidMount() {
     const userId = this.props.params.useId ? this.props.params.useId : '2';
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then((response) => {
-      this.props.setUserProfile(response.data);
-    });
+    this.props.getUserPage(+userId);
   }
   render() {
     return <Profile {...this.props} profile={this.props.state.profile} />;
@@ -46,6 +43,6 @@ class ProfileContainerComponent extends React.Component<IWithRouterProps> {
 }
 
 const ProfileWithRouter = withRouter(ProfileContainerComponent);
-const ProfileContainer = connect(mapState, { setUserProfile })(ProfileWithRouter);
+const ProfileContainer = connect(mapState, { getUserPage })(ProfileWithRouter);
 
 export default ProfileContainer;

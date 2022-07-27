@@ -1,3 +1,5 @@
+import { Dispatch } from 'redux';
+import { userAPI } from '../API/Api';
 import { IProfileState, IActionType, IPost, IProfile } from '../interfaces';
 
 const ADD_POST = 'ADD_POST';
@@ -60,5 +62,11 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
       return state;
   }
 };
-
+export const getUserPage = (userId: number) => {
+  return (dispatch: Dispatch) => {
+    userAPI.getUserPage(userId).then((response) => {
+      dispatch(setUserProfile(response));
+    });
+  };
+};
 export default profileReducer;
