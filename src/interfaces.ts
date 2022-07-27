@@ -149,10 +149,8 @@ export interface IUsersContainerComponentProps {
   usersCount: number;
   isFetching: boolean;
   followingInProgress: number[];
-  toggleFollow: (userId: number) => void;
-  setUsers: (users: IUser[]) => void;
-  setCurrentPage: (page: number) => void;
-  setUsersCount: (usersCount: number) => void;
+  toggleFollowThunk: (userId: number, userFollowed: boolean) => void;
   toggleIsFetching: (isFetching: boolean) => void;
   toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
+  getUsers: (currentPage: number, pageSize: number) => void;
 }

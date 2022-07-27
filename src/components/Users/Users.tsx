@@ -3,7 +3,6 @@ import { IUser } from '../../interfaces';
 import s from './Users.module.scss';
 import userPhoto from '../../assets/user.png';
 import { NavLink } from 'react-router-dom';
-import { userAPI } from '../../API/Api';
 
 export interface IUsersProps {
   state: IUser[];
@@ -11,9 +10,8 @@ export interface IUsersProps {
   currentPage: number;
   usersCount: number;
   followingInProgress: number[];
-  toggleFollow: (userId: number) => void;
+  toggleFollow: (userId: number, userFollowed: boolean) => void;
   onChangedPage: (page: number) => void;
-  toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
 }
 const Users: FC<IUsersProps> = (props: IUsersProps) => {
   const pagesCount = Math.ceil(props.usersCount / props.pageSize);
@@ -61,23 +59,7 @@ const Users: FC<IUsersProps> = (props: IUsersProps) => {
               disabled={props.followingInProgress.some((id) => id === user.id)}
               className={user.followed ? `${s.btn} ${s.follow}` : `${s.btn} ${s.unfollow}`}
               onClick={() => {
-                if (!user.followed) {
-                  props.toggleIsFollowingInProgress(user.id, true);
-                  userAPI.followUser(user.id).then((response) => {
-                    if (response.resultCode == 0) {
-                      props.toggleFollow(user.id);
-                    }
-                    props.toggleIsFollowingInProgress(user.id, false);
-                  });
-                } else {
-                  props.toggleIsFollowingInProgress(user.id, true);
-                  userAPI.unfollowUser(user.id).then((response) => {
-                    if (response.resultCode == 0) {
-                      props.toggleFollow(user.id);
-                    }
-                    props.toggleIsFollowingInProgress(user.id, false);
-                  });
-                }
+                props.toggleFollow(user.id, user.followed);
               }}
             >
               {user.followed ? 'unfollow' : 'follow'}

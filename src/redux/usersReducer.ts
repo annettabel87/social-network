@@ -1,3 +1,5 @@
+import { Dispatch } from 'redux';
+import { userAPI, IGetUsersData } from '../API/Api';
 import { IActionType, IUser, IUsersState } from '../interfaces';
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
@@ -98,5 +100,36 @@ const usersReducer = (state: IUsersState = initialState, action: IActionType) =>
       return state;
   }
 };
-
+export const getUsers = (currentPage: number, pageSize: number) => {
+  return (dispatch: Dispatch) => {
+    dispatch(toggleIsFetching(true));
+    userAPI.getUsers(currentPage, pageSize).then((response: IGetUsersData) => {
+      dispatch(toggleIsFetching(false));
+      dispatch(setUsers(response.items));
+      dispatch(setUsersCount(response.totalCount));
+      dispatch(setCurrentPage(currentPage));
+    });
+  };
+};
+export const toggleFollowThunk = (userId: number, userFollowed: boolean) => {
+  return (dispatch: Dispatch) => {
+    if (!userFollowed) {
+      dispatch(toggleIsFollowingInProgress(userId, true));
+      userAPI.followUser(userId).then((response) => {
+        if (response.resultCode == 0) {
+          dispatch(toggleFollow(userId));
+        }
+        dispatch(toggleIsFollowingInProgress(userId, false));
+      });
+    } else {
+      dispatch(toggleIsFollowingInProgress(userId, true));
+      userAPI.unfollowUser(userId).then((response) => {
+        if (response.resultCode == 0) {
+          dispatch(toggleFollow(userId));
+        }
+        dispatch(toggleIsFollowingInProgress(userId, false));
+      });
+    }
+  };
+};
 export default usersReducer;
