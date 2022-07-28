@@ -1,6 +1,6 @@
 import { Dispatch, EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import { IActionType, IDialogsState, IProfileState } from '../../interfaces';
+import { IActionType, IAuthState, IDialogsState, IProfileState } from '../../interfaces';
 import { updateNewMessageCreator, sendMessagetCreator } from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 
@@ -8,10 +8,12 @@ const mapState = (
   state: EmptyObject & {
     dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
+    authReducer: IAuthState;
   }
 ) => {
   return {
     state: state.dialogsReducer,
+    isAuth: state.authReducer.isAuth,
   };
 };
 

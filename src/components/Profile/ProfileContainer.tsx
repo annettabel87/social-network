@@ -2,6 +2,7 @@ import React, { JSXElementConstructor } from 'react';
 import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
 import {
+  IAuthState,
   IDialogsState,
   IProfileContainerComponentProps,
   IProfileState,
@@ -10,18 +11,20 @@ import {
 } from '../../interfaces';
 import Profile from './Profile';
 import { getUserPage } from '../../redux/profileReducer';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const mapState = (
   state: EmptyObject & {
     dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
     usersReducer: IUsersState;
+    authReducer: IAuthState;
   }
 ) => {
   return {
     state: state.profileReducer,
     profile: state.profileReducer.profile,
+    isAuth: state.authReducer.isAuth,
   };
 };
 
@@ -38,6 +41,9 @@ class ProfileContainerComponent extends React.Component<IWithRouterProps> {
     this.props.getUserPage(+userId);
   }
   render() {
+    if (!this.props.isAuth) {
+      return <Navigate to="/login" />;
+    }
     return <Profile {...this.props} profile={this.props.state.profile} />;
   }
 }

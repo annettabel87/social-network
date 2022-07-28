@@ -69,6 +69,7 @@ export interface IActionType {
 }
 export interface IDialogsProps {
   state: IDialogsState;
+  isAuth: boolean;
   sendMessage: () => void;
   updateNewMessage: (body: string) => void;
 }
@@ -134,12 +135,14 @@ export interface IAuthContainerProps {
 }
 export interface IWithRouterProps {
   state: IProfileState;
+  isAuth: boolean;
   params: Readonly<Params<string>>;
   getUserPage: (userId: number) => void;
 }
 export interface IProfileContainerComponentProps {
   state: IProfileState;
   getUserPage: (userId: number) => void;
+  isAuth: boolean;
 }
 export interface IUsersContainerComponentProps {
   state: IUser[];
