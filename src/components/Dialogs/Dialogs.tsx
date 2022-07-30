@@ -3,7 +3,6 @@ import { IDialogsProps } from '../../interfaces';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import s from './Dialogs.module.scss';
-import { Navigate } from 'react-router-dom';
 
 const Dialogs: FC<IDialogsProps> = (props) => {
   const dialogElements = props.state.dialogs.map((dialog) => (
@@ -19,9 +18,7 @@ const Dialogs: FC<IDialogsProps> = (props) => {
   const sendMessage = () => {
     props.sendMessage();
   };
-  if (!props.isAuth) {
-    return <Navigate to="/login" />;
-  }
+
   return (
     <section className={s.dialogs}>
       <div className={s.dialogsWrapper}>

@@ -1,8 +1,7 @@
 import React, { JSXElementConstructor } from 'react';
-import { EmptyObject } from 'redux';
+import { EmptyObject, compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  IAuthState,
   IDialogsState,
   IProfileContainerComponentProps,
   IProfileState,
@@ -11,20 +10,19 @@ import {
 } from '../../interfaces';
 import Profile from './Profile';
 import { getUserPage } from '../../redux/profileReducer';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 const mapState = (
   state: EmptyObject & {
     dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
     usersReducer: IUsersState;
-    authReducer: IAuthState;
   }
 ) => {
   return {
     state: state.profileReducer,
     profile: state.profileReducer.profile,
-    isAuth: state.authReducer.isAuth,
   };
 };
 
@@ -35,20 +33,18 @@ export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) =>
   };
 };
 
-class ProfileContainerComponent extends React.Component<IWithRouterProps> {
+class ProfileContainer extends React.Component<IWithRouterProps> {
   componentDidMount() {
     const userId = this.props.params.useId ? this.props.params.useId : '2';
     this.props.getUserPage(+userId);
   }
   render() {
-    if (!this.props.isAuth) {
-      return <Navigate to="/login" />;
-    }
     return <Profile {...this.props} profile={this.props.state.profile} />;
   }
 }
 
-const ProfileWithRouter = withRouter(ProfileContainerComponent);
-const ProfileContainer = connect(mapState, { getUserPage })(ProfileWithRouter);
-
-export default ProfileContainer;
+export default compose<React.ComponentType>(
+  connect(mapState, { getUserPage }),
+  withAuthRedirect,
+  withRouter
+)(ProfileContainer);

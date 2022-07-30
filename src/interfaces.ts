@@ -156,3 +156,6 @@ export interface IUsersContainerComponentProps {
   toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
   getUsers: (currentPage: number, pageSize: number) => void;
 }
+export interface IMapStateAuth {
+  isAuth: boolean;
+}
