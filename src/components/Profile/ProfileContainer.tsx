@@ -11,7 +11,6 @@ import {
 import Profile from './Profile';
 import { getUserPage } from '../../redux/profileReducer';
 import { useParams } from 'react-router-dom';
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 const mapState = (
   state: EmptyObject & {
@@ -45,6 +44,5 @@ class ProfileContainer extends React.Component<IWithRouterProps> {
 
 export default compose<React.ComponentType>(
   connect(mapState, { getUserPage }),
-  withAuthRedirect,
   withRouter
 )(ProfileContainer);
