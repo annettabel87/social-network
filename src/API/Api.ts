@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IProfile, IUser, IUserData } from '../interfaces';
+import { IAuthData, IFollowUserData, IGetUsersData, IProfile } from '../interfaces';
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -9,15 +9,6 @@ const instance = axios.create({
   },
 });
 
-export interface IGetUsersData {
-  error: string | null;
-  items: IUser[];
-  totalCount: number;
-}
-export interface IAuthData {
-  data: IUserData;
-  resultCode: number;
-}
 export const userAPI = {
   getUsers(currentPage: number, pageSize: number): Promise<IGetUsersData> {
     return instance
@@ -30,14 +21,18 @@ export const userAPI = {
   unfollowUser(userId: number): Promise<IFollowUserData> {
     return instance.delete(`follow/${userId}`).then((response) => response.data);
   },
+};
+export const profileAPI = {
   getUserPage(userId: number): Promise<IProfile> {
     return instance.get(`profile/${userId}`).then((response) => response.data);
   },
   getAuthUserInfo(): Promise<IAuthData> {
     return instance.get(`auth/me`).then((response) => response.data);
   },
+  getStatus(userId: number): Promise<string> {
+    return instance.get(`profile/status/${userId}`).then((response) => response.data);
+  },
+  updateStatus(status: string) {
+    return instance.put(`profile/status`, { status: status }).then((response) => response.data);
+  },
 };
-export interface IFollowUserData {
-  messages: string[];
-  resultCode: number;
-}

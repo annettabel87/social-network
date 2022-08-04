@@ -9,7 +9,7 @@ import {
   IWithRouterProps,
 } from '../../interfaces';
 import Profile from './Profile';
-import { getUserPage } from '../../redux/profileReducer';
+import { getStatus, getUserPage, updateStatus } from '../../redux/profileReducer';
 import { useParams } from 'react-router-dom';
 
 const mapState = (
@@ -22,6 +22,7 @@ const mapState = (
   return {
     state: state.profileReducer,
     profile: state.profileReducer.profile,
+    status: state.profileReducer.status,
   };
 };
 
@@ -36,13 +37,21 @@ class ProfileContainer extends React.Component<IWithRouterProps> {
   componentDidMount() {
     const userId = this.props.params.useId ? this.props.params.useId : '2';
     this.props.getUserPage(+userId);
+    this.props.getStatus(+userId);
   }
   render() {
-    return <Profile {...this.props} profile={this.props.state.profile} />;
+    return (
+      <Profile
+        {...this.props}
+        profile={this.props.state.profile}
+        status={this.props.status}
+        updateStatus={this.props.updateStatus}
+      />
+    );
   }
 }
 
 export default compose<React.ComponentType>(
-  connect(mapState, { getUserPage }),
+  connect(mapState, { getUserPage, getStatus, updateStatus }),
   withRouter
 )(ProfileContainer);

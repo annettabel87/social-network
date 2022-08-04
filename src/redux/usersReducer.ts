@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
-import { userAPI, IGetUsersData } from '../API/Api';
-import { IActionType, IUser, IUsersState } from '../interfaces';
+import { userAPI } from '../API/Api';
+import { IActionType, IGetUsersData, IUser, IUsersState } from '../interfaces';
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';

@@ -1,18 +1,9 @@
 import React, { FC } from 'react';
-import { IUser } from '../../interfaces';
+import { IUsersProps } from '../../interfaces';
 import s from './Users.module.scss';
 import userPhoto from '../../assets/user.png';
 import { NavLink } from 'react-router-dom';
 
-export interface IUsersProps {
-  state: IUser[];
-  pageSize: number;
-  currentPage: number;
-  usersCount: number;
-  followingInProgress: number[];
-  toggleFollow: (userId: number, userFollowed: boolean) => void;
-  onChangedPage: (page: number) => void;
-}
 const Users: FC<IUsersProps> = (props: IUsersProps) => {
   const pagesCount = Math.ceil(props.usersCount / props.pageSize);
   const pages: number[] = [];

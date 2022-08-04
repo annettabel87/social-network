@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { userAPI } from '../API/Api';
+import { profileAPI } from '../API/Api';
 import { IActionType, IAuthState, IUserData } from '../interfaces';
 
 const SET_USER_DATA = 'SET_USER_DATA';
@@ -48,7 +48,7 @@ const authReducer = (state: IAuthState = initialState, action: IActionType) => {
 export const getAuthInfo = () => {
   return (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true));
-    userAPI.getAuthUserInfo().then((response) => {
+    profileAPI.getAuthUserInfo().then((response) => {
       if (response.resultCode === 0) {
         dispatch(setUserData(response.data));
       }

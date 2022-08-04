@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
 import Preloader from '../../../common/Preloader/Preloader';
-import { IProfile } from '../../../interfaces';
+import { IProfileProps } from '../../../interfaces';
 import userPhoto from '../../../assets/user.png';
 import s from './ProfileInfo.module.scss';
 import ProfileStatus from './ProfileStatus';
 
-export interface IProfileProps {
-  profile: IProfile | null;
-}
 const ProfileInfo: FC<IProfileProps> = (props) => {
   if (!props.profile) {
     return <Preloader />;
@@ -23,7 +20,7 @@ const ProfileInfo: FC<IProfileProps> = (props) => {
         </div>
         <div className={s.description}>
           <p>{props.profile.fullName}</p>
-          <ProfileStatus status=" Hello" />
+          <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
           <p>about Me: {props.profile.aboutMe}</p>
         </div>
       </div>

@@ -5,6 +5,7 @@ export interface IProfileState {
   posts: IPost[];
   newPostText: string;
   profile: IProfile | null;
+  status: string;
 }
 
 export interface IProfile {
@@ -66,6 +67,7 @@ export interface IActionType {
   isFetching?: boolean;
   profile?: IProfile;
   data?: IUserData;
+  status?: string;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -137,12 +139,18 @@ export interface IWithRouterProps {
   state: IProfileState;
   isAuth: boolean;
   params: Readonly<Params<string>>;
+  status: string;
   getUserPage: (userId: number) => void;
+  getStatus: (userId: number) => void;
+  updateStatus: (status: string) => void;
 }
 export interface IProfileContainerComponentProps {
   state: IProfileState;
   getUserPage: (userId: number) => void;
   isAuth: boolean;
+  status: string;
+  getStatus: (userId: number) => void;
+  updateStatus: (status: string) => void;
 }
 export interface IUsersContainerComponentProps {
   state: IUser[];
@@ -158,4 +166,35 @@ export interface IUsersContainerComponentProps {
 }
 export interface IMapStateAuth {
   isAuth: boolean;
+}
+export interface IProfileStatusProps {
+  status: string;
+  updateStatus: (status: string) => void;
+}
+export interface IGetUsersData {
+  error: string | null;
+  items: IUser[];
+  totalCount: number;
+}
+export interface IAuthData {
+  data: IUserData;
+  resultCode: number;
+}
+export interface IFollowUserData {
+  messages: string[];
+  resultCode: number;
+}
+export interface IProfileProps {
+  profile: IProfile | null;
+  status: string;
+  updateStatus: (status: string) => void;
+}
+export interface IUsersProps {
+  state: IUser[];
+  pageSize: number;
+  currentPage: number;
+  usersCount: number;
+  followingInProgress: number[];
+  toggleFollow: (userId: number, userFollowed: boolean) => void;
+  onChangedPage: (page: number) => void;
 }

@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux';
-import { userAPI } from '../API/Api';
+import { profileAPI } from '../API/Api';
 import { IProfileState, IActionType, IPost, IProfile } from '../interfaces';
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 export const addPostCreator = () => ({
   type: ADD_POST,
@@ -19,6 +20,10 @@ export const setUserProfile = (profile: IProfile | null) => ({
   type: SET_USER_PROFILE,
   profile: profile,
 });
+export const setStatusCreator = (status: string) => ({
+  type: SET_STATUS,
+  status: status,
+});
 const initialState = {
   posts: [
     { id: 1, post: 'Hello', likeCount: 4 },
@@ -28,6 +33,7 @@ const initialState = {
   ],
   newPostText: '',
   profile: null,
+  status: '',
 };
 const profileReducer = (state: IProfileState = initialState, action: IActionType) => {
   switch (action.type) {
@@ -58,14 +64,39 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
       };
     }
 
+    case SET_STATUS: {
+      return {
+        ...state,
+        status: action.status,
+      };
+    }
+
     default:
       return state;
   }
 };
 export const getUserPage = (userId: number) => {
   return (dispatch: Dispatch) => {
-    userAPI.getUserPage(userId).then((response) => {
+    profileAPI.getUserPage(userId).then((response) => {
       dispatch(setUserProfile(response));
+    });
+  };
+};
+
+export const getStatus = (userId: number) => {
+  return (dispatch: Dispatch) => {
+    profileAPI.getStatus(userId).then((response) => {
+      dispatch(setStatusCreator(response));
+    });
+  };
+};
+
+export const updateStatus = (status: string) => {
+  return (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setStatusCreator(status));
+      }
     });
   };
 };
