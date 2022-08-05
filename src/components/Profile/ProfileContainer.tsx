@@ -35,7 +35,7 @@ export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) =>
 
 class ProfileContainer extends React.Component<IWithRouterProps> {
   componentDidMount() {
-    const userId = this.props.params.useId ? this.props.params.useId : '2';
+    const userId = this.props.params.useId ? this.props.params.useId : '25050';
     this.props.getUserPage(+userId);
     this.props.getStatus(+userId);
   }

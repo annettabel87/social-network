@@ -1,10 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { IProfileStatusProps } from '../../../interfaces';
 import s from './ProfileStatus.module.scss';
 
 const ProfileStatus: FC<IProfileStatusProps> = ({ status, updateStatus }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [localStatus, setLocalStatus] = useState<string>(status);
+  useEffect(() => {
+    setLocalStatus(status);
+  }, [status]);
   const activateEditMode = () => {
     setEditMode(true);
   };
@@ -12,11 +15,14 @@ const ProfileStatus: FC<IProfileStatusProps> = ({ status, updateStatus }) => {
     setEditMode(false);
     updateStatus(localStatus);
   };
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalStatus(e.currentTarget.value);
+  };
   return (
     <div className={s.profileStatusWrapper}>
       {!editMode && (
         <div className={s.profileStatusText} onDoubleClick={activateEditMode}>
-          status: {status || '----'}
+          status: {localStatus || '----'}
         </div>
       )}
       {editMode && (
@@ -26,9 +32,9 @@ const ProfileStatus: FC<IProfileStatusProps> = ({ status, updateStatus }) => {
             autoFocus={true}
             value={localStatus}
             onBlur={deActivateEditMode}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLocalStatus(e.currentTarget.value)
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChangeHandler(e);
+            }}
           />
         </div>
       )}
