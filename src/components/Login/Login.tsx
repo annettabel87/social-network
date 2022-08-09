@@ -1,12 +1,21 @@
 import s from './Login.module.scss';
 import { Field, Form, Formik, FormikValues } from 'formik';
-import { IAuthState, IErrors, IInitialValues, ILoginProps } from '../../interfaces';
+import { IAuthState, ILoginProps } from '../../interfaces';
 import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
 import { logIn } from '../../redux/authReducer';
 import { connect } from 'react-redux';
 import { EmptyObject } from 'redux';
 
+export interface IInitialValues {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+export interface IErrors {
+  email?: string;
+  password?: string;
+}
 const mapState = (
   state: EmptyObject & {
     authReducer: IAuthState;

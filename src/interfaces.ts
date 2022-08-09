@@ -3,7 +3,6 @@ import { Store, EmptyObject } from 'redux';
 
 export interface IProfileState {
   posts: IPost[];
-  newPostText: string;
   profile: IProfile | null;
   status: string;
 }
@@ -69,6 +68,7 @@ export interface IActionType {
   data?: IUserData;
   status?: string;
   isAuth?: boolean;
+  postText?: string;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -82,9 +82,7 @@ export interface IMessageProps {
 
 export interface IMyPostsprops {
   posts: IPost[];
-  newPostText: string;
-  addPost: () => void;
-  updateNewTextCreator: (text: string) => void;
+  addPost: (postText: string) => void;
 }
 export interface IPostProps {
   message: string;
@@ -206,15 +204,7 @@ export interface ILoginData {
     userId: number;
   };
 }
-export interface IInitialValues {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-export interface IErrors {
-  email?: string;
-  password?: string;
-}
+
 export interface ILoginProps {
   logIn: (email: string, password: string, rememberMe: boolean) => void;
   isAuth: boolean;

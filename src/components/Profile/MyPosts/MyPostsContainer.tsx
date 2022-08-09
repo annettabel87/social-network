@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { EmptyObject, Dispatch } from 'redux';
 import { IDialogsState, IProfileState, IActionType } from '../../../interfaces';
-import { addPostCreator, updateNewTextCreator } from '../../../redux/profileReducer';
+import { addPostCreator } from '../../../redux/profileReducer';
 
 import MyPosts from './MyPosts';
 
@@ -13,17 +13,13 @@ const mapState = (
 ) => {
   return {
     posts: state.profileReducer.posts,
-    newPostText: state.profileReducer.newPostText,
   };
 };
 
 const mapDispatch = (dispatch: Dispatch<IActionType>) => {
   return {
-    addPost: () => {
-      dispatch(addPostCreator());
-    },
-    updateNewTextCreator: (text: string) => {
-      dispatch(updateNewTextCreator(text));
+    addPost: (postText: string) => {
+      dispatch(addPostCreator(postText));
     },
   };
 };
