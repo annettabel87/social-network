@@ -68,6 +68,7 @@ export interface IActionType {
   profile?: IProfile;
   data?: IUserData;
   status?: string;
+  isAuth?: boolean;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -197,4 +198,24 @@ export interface IUsersProps {
   followingInProgress: number[];
   toggleFollow: (userId: number, userFollowed: boolean) => void;
   onChangedPage: (page: number) => void;
+}
+export interface ILoginData {
+  resultCode: number;
+  messages: string[];
+  data: {
+    userId: number;
+  };
+}
+export interface IInitialValues {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+export interface IErrors {
+  email?: string;
+  password?: string;
+}
+export interface ILoginProps {
+  logIn: (email: string, password: string, rememberMe: boolean) => void;
+  isAuth: boolean;
 }

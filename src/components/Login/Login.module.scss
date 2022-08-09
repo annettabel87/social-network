@@ -1,0 +1,43 @@
+.errors {    
+    color: red;
+    margin: 10px 0;
+    font-weight: 800;
+  }
+.title {
+  text-align: center;
+  font-size: 25px;
+}
+  .formWrapper {
+    margin: 0 auto;
+    font-size: 21px;
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 620px;
+    box-shadow: 8px 9px 8px 1px rgba(34, 60, 80, 0.2);
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .input {
+    background-color: #fefefe;
+    font-size: 21px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: all ease-in-out 0.3s;
+    border: 1px solid #ccc;
+  }
+  .checkboxWrapper {
+    display: flex;
+    gap: 8px;
+  }
+  .button {
+    height: 46px;
+    border-radius: 10px;
+    background-color: #5c5cd8;
+    border: none;
+    font-size: 21px;
+    color: #fff;
+  }

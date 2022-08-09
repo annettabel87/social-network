@@ -1,13 +1,19 @@
 import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { profileAPI } from '../API/Api';
-import { IActionType, IAuthState, IUserData } from '../interfaces';
+import { IActionType, IAuthState, IState } from '../interfaces';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
-export const setUserData = (data: IUserData | null) => ({
+export const setUserData = (
+  id: number | null,
+  email: string | null,
+  login: string | null,
+  isAuth: boolean
+) => ({
   type: SET_USER_DATA,
-  data: data,
+  data: { id, email, login, isAuth },
 });
 
 export const toggleIsFetching = (isFetching: boolean) => {
@@ -29,10 +35,7 @@ const authReducer = (state: IAuthState = initialState, action: IActionType) => {
     case SET_USER_DATA: {
       return {
         ...state,
-        id: action.data?.id,
-        email: action.data?.email,
-        login: action.data?.login,
-        isAuth: true,
+        ...action.data,
       };
     }
     case TOGGLE_IS_FETCHING: {
@@ -50,9 +53,19 @@ export const getAuthInfo = () => {
     dispatch(toggleIsFetching(true));
     profileAPI.getAuthUserInfo().then((response) => {
       if (response.resultCode === 0) {
-        dispatch(setUserData(response.data));
+        const { id, login, email } = response.data;
+        dispatch(setUserData(id, email, login, true));
       }
       dispatch(toggleIsFetching(false));
+    });
+  };
+};
+export const logIn = (email: string, password: string, rememberMe: boolean) => {
+  return (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
+    profileAPI.login(email, password, rememberMe).then((response) => {
+      if (response.resultCode === 0) {
+        dispatch(getAuthInfo());
+      }
     });
   };
 };

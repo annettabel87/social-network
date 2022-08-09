@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IAuthData, IFollowUserData, IGetUsersData, IProfile } from '../interfaces';
+import { IAuthData, IFollowUserData, IGetUsersData, ILoginData, IProfile } from '../interfaces';
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -34,5 +34,10 @@ export const profileAPI = {
   },
   updateStatus(status: string) {
     return instance.put(`profile/status`, { status: status }).then((response) => response.data);
+  },
+  login(email: string, password: string, rememberMe: boolean): Promise<ILoginData> {
+    return instance.post(`/auth/login`, { email, password, rememberMe }).then((response) => {
+      return response.data;
+    });
   },
 };
