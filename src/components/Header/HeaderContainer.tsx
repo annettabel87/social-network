@@ -8,7 +8,7 @@ import {
   IProfileState,
   IUsersState,
 } from '../../interfaces';
-import { getAuthInfo } from '../../redux/authReducer';
+import { getAuthInfo, logOut } from '../../redux/authReducer';
 import Header from './Header';
 
 const mapState = (
@@ -36,5 +36,5 @@ class HeaderContainerComponent extends React.Component<IAuthContainerProps> {
     return <Header {...this.props} />;
   }
 }
-const HeaderContainer = connect(mapState, { getAuthInfo })(HeaderContainerComponent);
+const HeaderContainer = connect(mapState, { getAuthInfo, logOut })(HeaderContainerComponent);
 export default HeaderContainer;

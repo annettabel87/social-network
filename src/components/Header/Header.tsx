@@ -11,7 +11,12 @@ const Header: FC<IAuthContainerProps> = (props) => {
         {props.isFetching ? (
           <div>...</div>
         ) : props.isAuth ? (
-          props.login
+          <>
+            <div className={s.text}>{props.login}</div>
+            <button onClick={props.logOut} className={s.btn}>
+              logOut
+            </button>
+          </>
         ) : (
           <NavLink className={s.loginLink} to={'/login'}>
             {' '}

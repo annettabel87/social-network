@@ -17,7 +17,20 @@
 .loginBlock {
     font-size: 24px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 .loginLink {
     text-decoration: none;
+    cursor: pointer;
+}
+.btn {
+    padding: 10px;
+    font-size: 21px;
+    background-color: #5c5cd8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }

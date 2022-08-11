@@ -132,6 +132,7 @@ export interface IAuthContainerProps {
   isFetching: boolean;
   isAuth: boolean;
   getAuthInfo: () => void;
+  logOut: () => void;
 }
 export interface IWithRouterProps {
   state: IProfileState;
@@ -207,4 +208,8 @@ export interface ILoginData {
 export interface ILoginProps {
   logIn: (email: string, password: string, rememberMe: boolean) => void;
   isAuth: boolean;
+}
+export interface ILogoutData {
+  resultCode: number;
+  messages: string[];
 }

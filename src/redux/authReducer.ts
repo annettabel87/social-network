@@ -69,4 +69,13 @@ export const logIn = (email: string, password: string, rememberMe: boolean) => {
     });
   };
 };
+export const logOut = () => {
+  return (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
+    profileAPI.logout().then((response) => {
+      if (response.resultCode === 0) {
+        dispatch(setUserData(null, null, null, false));
+      }
+    });
+  };
+};
 export default authReducer;
