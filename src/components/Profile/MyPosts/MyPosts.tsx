@@ -50,10 +50,11 @@ const PostForm: FC<IPostProps> = ({ addPost }) => {
       <Formik
         initialValues={initialValues}
         validate={(values: FormikValues) => validate(values)}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           const { postText } = values;
           addPost(postText);
           setSubmitting(false);
+          resetForm();
         }}
       >
         {({ isSubmitting, touched, errors }) => (

@@ -36,7 +36,6 @@ export interface IPost {
 export interface IDialogsState {
   dialogs: IDialog[];
   messages: IMessage[];
-  newMessageBody: string;
 }
 export interface IDialog {
   id: number;
@@ -69,12 +68,12 @@ export interface IActionType {
   status?: string;
   isAuth?: boolean;
   postText?: string;
+  messageText?: string;
 }
 export interface IDialogsProps {
   state: IDialogsState;
   isAuth: boolean;
-  sendMessage: () => void;
-  updateNewMessage: (body: string) => void;
+  sendMessage: (messageText: string) => void;
 }
 export interface IMessageProps {
   text: string;

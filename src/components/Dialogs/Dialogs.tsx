@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { IDialogsProps } from '../../interfaces';
+import { Field, Form, Formik, FormikValues } from 'formik';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import s from './Dialogs.module.scss';
@@ -11,13 +12,6 @@ const Dialogs: FC<IDialogsProps> = (props) => {
   const messageElements = props.state.messages.map((message) => (
     <Message text={message.message} key={message.id} />
   ));
-  const onChangeMessageText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const body = e.target ? e.target.value : '';
-    props.updateNewMessage(body);
-  };
-  const sendMessage = () => {
-    props.sendMessage();
-  };
 
   return (
     <section className={s.dialogs}>
@@ -28,20 +22,64 @@ const Dialogs: FC<IDialogsProps> = (props) => {
       <div className={s.messagesWrapper}>
         <h3 className={s.title}>Name</h3>
         <div className={s.messageBlock}>{messageElements}</div>
-        <div className={s.newMessage}>
-          <textarea
-            className={s.newMessageInput}
-            placeholder="input your message"
-            value={props.state.newMessageBody}
-            onChange={onChangeMessageText}
-          ></textarea>
-          <button className={s.btn} onClick={sendMessage}>
-            send
-          </button>
-        </div>
+        <AddMessageForm sendMessage={props.sendMessage} />
       </div>
     </section>
   );
 };
+export interface IInitialValues {
+  messageText: string;
+}
+export interface IErrors {
+  messageText?: string;
+}
+export interface IAddMessageFormProps {
+  sendMessage: (messageText: string) => void;
+}
+const AddMessageForm: FC<IAddMessageFormProps> = ({ sendMessage }) => {
+  const initialValues: IInitialValues = {
+    messageText: '',
+  };
+  const validate = (values: FormikValues) => {
+    const errors: IErrors = {};
 
+    if (values.messageText.length > 300) {
+      errors.messageText = 'Max length 300';
+    }
+    return errors;
+  };
+  return (
+    <div className={s.newMessage}>
+      <Formik
+        initialValues={initialValues}
+        validate={(values: FormikValues) => validate(values)}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          const { messageText } = values;
+          sendMessage(messageText);
+          setSubmitting(false);
+          resetForm();
+        }}
+      >
+        {({ isSubmitting, touched, errors }) => (
+          <Form className={s.form}>
+            <Field
+              type="textarea"
+              name="messageText"
+              id="messageText"
+              placeholder="input your message"
+              className={s.newMessageInput}
+            />
+            {touched.messageText && errors.messageText && (
+              <div className={s.errors}>{errors.messageText}</div>
+            )}
+
+            <button type="submit" disabled={isSubmitting} className={s.btn}>
+              send
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
 export default Dialogs;
