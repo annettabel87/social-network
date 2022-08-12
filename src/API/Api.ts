@@ -42,10 +42,17 @@ export const profileAPI = {
   updateStatus(status: string) {
     return instance.put(`profile/status`, { status: status }).then((response) => response.data);
   },
-  login(email: string, password: string, rememberMe: boolean): Promise<ILoginData> {
-    return instance.post(`/auth/login`, { email, password, rememberMe }).then((response) => {
-      return response.data;
-    });
+  login(
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    setStatus: (status: string) => void
+  ): Promise<ILoginData> {
+    return instance
+      .post(`/auth/login`, { email, password, rememberMe, setStatus })
+      .then((response) => {
+        return response.data;
+      });
   },
   logout(): Promise<ILogoutData> {
     return instance.delete(`/auth/login`).then((response) => {

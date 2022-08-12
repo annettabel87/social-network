@@ -60,11 +60,18 @@ export const getAuthInfo = () => {
     });
   };
 };
-export const logIn = (email: string, password: string, rememberMe: boolean) => {
+export const logIn = (
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  setStatus: (status: string) => void
+) => {
   return (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
-    profileAPI.login(email, password, rememberMe).then((response) => {
+    profileAPI.login(email, password, rememberMe, setStatus).then((response) => {
       if (response.resultCode === 0) {
         dispatch(getAuthInfo());
+      } else {
+        setStatus(response.messages[0]);
       }
     });
   };

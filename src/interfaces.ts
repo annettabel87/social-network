@@ -206,7 +206,12 @@ export interface ILoginData {
 }
 
 export interface ILoginProps {
-  logIn: (email: string, password: string, rememberMe: boolean) => void;
+  logIn: (
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    setStatus: (status: string) => void
+  ) => void;
   isAuth: boolean;
 }
 export interface ILogoutData {

@@ -62,14 +62,13 @@ const LoginForm: FC<ILoginProps> = ({ logIn }) => {
       <Formik
         initialValues={initialValues}
         validate={(values: FormikValues) => validate(values)}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+        onSubmit={(values, { setSubmitting, setStatus }) => {
           const { email, password, rememberMe } = values;
-          logIn(email, password, rememberMe);
+          logIn(email, password, rememberMe, setStatus);
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting, touched, errors }) => (
+        {({ isSubmitting, touched, errors, status }) => (
           <Form className={s.form}>
             <label htmlFor="email">E-mail</label>
             <Field type="email" name="email" id="email" className={s.input} />
@@ -84,6 +83,7 @@ const LoginForm: FC<ILoginProps> = ({ logIn }) => {
               <label htmlFor="rememberMe">Remember me</label>
               <Field type="checkbox" name="rememberMe" id="rememberMe" />
             </div>
+            <div className={s.errors}>{status}</div>
             <button type="submit" disabled={isSubmitting} className={s.button}>
               Login
             </button>
