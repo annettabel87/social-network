@@ -100,7 +100,7 @@ const usersReducer = (state: IUsersState = initialState, action: IActionType) =>
       return state;
   }
 };
-export const getUsers = (currentPage: number, pageSize: number) => {
+export const requestUsers = (currentPage: number, pageSize: number) => {
   return (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true));
     userAPI.getUsers(currentPage, pageSize).then((response: IGetUsersData) => {

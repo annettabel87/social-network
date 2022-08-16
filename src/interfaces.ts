@@ -164,7 +164,7 @@ export interface IUsersContainerComponentProps {
   toggleFollowThunk: (userId: number, userFollowed: boolean) => void;
   toggleIsFetching: (isFetching: boolean) => void;
   toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
-  getUsers: (currentPage: number, pageSize: number) => void;
+  requestUsers: (currentPage: number, pageSize: number) => void;
 }
 export interface IMapStateAuth {
   isAuth: boolean;

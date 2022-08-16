@@ -1,47 +1,46 @@
 import React from 'react';
 import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import {
-  IAuthState,
-  IDialogsState,
-  IProfileState,
-  IUsersContainerComponentProps,
-  IUsersState,
-} from '../../interfaces';
+import { IUsersContainerComponentProps, IUsersState } from '../../interfaces';
 import {
   toggleFollow,
   toggleIsFetching,
   toggleIsFollowingInProgress,
-  getUsers,
+  requestUsers,
   toggleFollowThunk,
 } from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../../common/Preloader/Preloader';
+import {
+  getFollowingInProgress,
+  getIsFetching,
+  getPage,
+  getPageSize,
+  getUsers,
+  getUsersCount,
+} from '../../redux/usersSelectors';
 
 const mapState = (
   state: EmptyObject & {
-    dialogsReducer: IDialogsState;
-    profileReducer: IProfileState;
     usersReducer: IUsersState;
-    authReducer: IAuthState;
   }
 ) => {
   return {
-    state: state.usersReducer.users,
-    pageSize: state.usersReducer.pageSize,
-    currentPage: state.usersReducer.currentPage,
-    usersCount: state.usersReducer.usersCount,
-    isFetching: state.usersReducer.isFetching,
-    followingInProgress: state.usersReducer.followingInProgress,
+    state: getUsers(state),
+    pageSize: getPageSize(state),
+    currentPage: getPage(state),
+    usersCount: getUsersCount(state),
+    isFetching: getIsFetching(state),
+    followingInProgress: getFollowingInProgress(state),
   };
 };
 
 class UsersContainerComponent extends React.Component<IUsersContainerComponentProps> {
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    this.props.requestUsers(this.props.currentPage, this.props.pageSize);
   }
   onChangedPage = (pageNumber: number) => {
-    this.props.getUsers(pageNumber, this.props.pageSize);
+    this.props.requestUsers(pageNumber, this.props.pageSize);
   };
 
   render() {
@@ -68,7 +67,7 @@ const UsersContainer = connect(mapState, {
   toggleFollow,
   toggleIsFetching,
   toggleIsFollowingInProgress,
-  getUsers,
+  requestUsers,
   toggleFollowThunk,
 })(UsersContainerComponent);
 export default UsersContainer;
