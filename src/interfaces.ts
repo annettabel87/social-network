@@ -1,4 +1,4 @@
-import { Params } from 'react-router-dom';
+import { NavigateFunction, Params } from 'react-router-dom';
 import { Store, EmptyObject } from 'redux';
 
 export interface IProfileState {
@@ -139,6 +139,8 @@ export interface IWithRouterProps {
   isAuth: boolean;
   params: Readonly<Params<string>>;
   status: string;
+  authorizedUserId: number;
+  navigate: NavigateFunction;
   getUserPage: (userId: number) => void;
   getStatus: (userId: number) => void;
   updateStatus: (status: string) => void;
@@ -148,6 +150,7 @@ export interface IProfileContainerComponentProps {
   getUserPage: (userId: number) => void;
   isAuth: boolean;
   status: string;
+  authorizedUserId: number;
   getStatus: (userId: number) => void;
   updateStatus: (status: string) => void;
 }
@@ -217,4 +220,11 @@ export interface ILoginProps {
 export interface ILogoutData {
   resultCode: number;
   messages: string[];
+}
+export interface IAppComponentProps {
+  initializedSuccess: () => void;
+  initialized: boolean;
+}
+export interface IAppState {
+  initialized: boolean;
 }

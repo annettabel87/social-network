@@ -2,6 +2,7 @@ import React, { JSXElementConstructor } from 'react';
 import { EmptyObject, compose } from 'redux';
 import { connect } from 'react-redux';
 import {
+  IAuthState,
   IDialogsState,
   IProfileContainerComponentProps,
   IProfileState,
@@ -10,32 +11,41 @@ import {
 } from '../../interfaces';
 import Profile from './Profile';
 import { getStatus, getUserPage, updateStatus } from '../../redux/profileReducer';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const mapState = (
   state: EmptyObject & {
     dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
     usersReducer: IUsersState;
+    authReducer: IAuthState;
   }
 ) => {
   return {
     state: state.profileReducer,
     profile: state.profileReducer.profile,
     status: state.profileReducer.status,
+    authorizedUserId: state.authReducer.id,
   };
 };
 
 export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) => {
   return (props: IProfileContainerComponentProps) => {
     const match = { params: useParams() };
-    return <Children {...props} params={match.params} />;
+    const navigate = useNavigate();
+    return <Children {...props} params={match.params} navigate={navigate} />;
   };
 };
 
 class ProfileContainer extends React.Component<IWithRouterProps> {
   componentDidMount() {
-    const userId = this.props.params.useId ? this.props.params.useId : '25050';
+    let userId = this.props.state.profile?.userId;
+    if (!userId) {
+      userId = this.props.authorizedUserId;
+      if (!userId) {
+        this.props.navigate('/login');
+      }
+    }
     this.props.getUserPage(+userId);
     this.props.getStatus(+userId);
   }
