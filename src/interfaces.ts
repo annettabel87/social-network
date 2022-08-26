@@ -69,6 +69,7 @@ export interface IActionType {
   isAuth?: boolean;
   postText?: string;
   messageText?: string;
+  postId?: number;
 }
 export interface IDialogsProps {
   state: IDialogsState;

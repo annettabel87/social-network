@@ -5,6 +5,7 @@ import { IProfileState, IActionType, IPost, IProfile } from '../interfaces';
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 export const addPostCreator = (postText: string) => ({
   type: ADD_POST,
@@ -18,6 +19,10 @@ export const setUserProfile = (profile: IProfile | null) => ({
 export const setStatusCreator = (status: string) => ({
   type: SET_STATUS,
   status: status,
+});
+export const deletePostCreator = (postId: number) => ({
+  type: DELETE_POST,
+  postId,
 });
 const initialState = {
   posts: [
@@ -41,6 +46,13 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
         ...state,
         posts: [...state.posts, newPost],
         newPostText: '',
+      };
+    }
+
+    case DELETE_POST: {
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.postId),
       };
     }
 
