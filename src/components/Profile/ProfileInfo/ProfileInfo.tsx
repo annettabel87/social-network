@@ -5,7 +5,7 @@ import userPhoto from '../../../assets/user.png';
 import s from './ProfileInfo.module.scss';
 import ProfileStatus from './ProfileStatus';
 
-const ProfileInfo: FC<IProfileProps> = (props) => {
+const ProfileInfo: FC<IProfileProps> = React.memo((props) => {
   if (!props.profile) {
     return <Preloader />;
   } else {
@@ -26,6 +26,6 @@ const ProfileInfo: FC<IProfileProps> = (props) => {
       </div>
     );
   }
-};
+});
 
 export default ProfileInfo;

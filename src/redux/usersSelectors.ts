@@ -9,7 +9,7 @@ export const getPageSize = (state: EmptyObject & { usersReducer: IUsersState }) 
 };
 
 export const getPage = (state: EmptyObject & { usersReducer: IUsersState }) => {
-  return state.usersReducer.pageSize;
+  return state.usersReducer.currentPage;
 };
 
 export const getUsersCount = (state: EmptyObject & { usersReducer: IUsersState }) => {

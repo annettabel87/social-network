@@ -1,62 +1,33 @@
 import React, { FC } from 'react';
 import { IUsersProps } from '../../interfaces';
 import s from './Users.module.scss';
-import userPhoto from '../../assets/user.png';
-import { NavLink } from 'react-router-dom';
+import User from './User';
+import Paginator from '../../common/Paginator/Paginator';
 
-const Users: FC<IUsersProps> = (props: IUsersProps) => {
-  const pagesCount = Math.ceil(props.usersCount / props.pageSize);
-  const pages: number[] = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
-  const curP = props.currentPage;
-  const curPF = curP - 5 < 0 ? 0 : curP - 5;
-  const curPL = curP + 5;
-  const slicedPages = pages.slice(curPF, curPL);
-
+const Users: FC<IUsersProps> = ({
+  state,
+  usersCount,
+  pageSize,
+  currentPage,
+  onChangedPage,
+  toggleFollow,
+  followingInProgress,
+}: IUsersProps) => {
   return (
     <div className={s.usersPage}>
-      <div className={s.paginationWrapper}>
-        {slicedPages.map((p) => {
-          return (
-            <button
-              key={p}
-              className={
-                props.currentPage === p ? `${s.paginationBtn} ${s.selectedPage}` : s.paginationBtn
-              }
-              onClick={() => props.onChangedPage(p)}
-            >
-              {p}
-            </button>
-          );
-        })}
-      </div>
-      {props.state.map((user) => (
-        <div className={s.userWrapper} key={user.id}>
-          <div className={s.avatarBlock}>
-            <NavLink to={`/profile/${user.id}`}>
-              <img
-                src={user.photos.small !== null ? user.photos.small : userPhoto}
-                alt="avatar"
-                className={s.avatarIcon}
-              />
-            </NavLink>
-          </div>
-          <div className={s.userInfo}>
-            <p className={s.mainText}>{user.name}</p>
-            <p className={s.text}>{user.status}</p>
-            <button
-              disabled={props.followingInProgress.some((id) => id === user.id)}
-              className={user.followed ? `${s.btn} ${s.follow}` : `${s.btn} ${s.unfollow}`}
-              onClick={() => {
-                props.toggleFollow(user.id, user.followed);
-              }}
-            >
-              {user.followed ? 'unfollow' : 'follow'}
-            </button>
-          </div>
-        </div>
+      <Paginator
+        items={usersCount}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onChangedPage={onChangedPage}
+      />
+      {state.map((user) => (
+        <User
+          key={user.id}
+          user={user}
+          followingInProgress={followingInProgress}
+          toggleFollow={toggleFollow}
+        />
       ))}
     </div>
   );

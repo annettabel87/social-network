@@ -1,7 +1,7 @@
 import { compose, Dispatch, EmptyObject } from 'redux';
 import { connect } from 'react-redux';
 import { IActionType, IAuthState, IDialogsState, IProfileState } from '../../interfaces';
-import { sendMessagetCreator } from '../../redux/dialogsReducer';
+import { sendMessageCreator } from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
@@ -21,7 +21,7 @@ const mapState = (
 const mapDispatch = (dispatch: Dispatch<IActionType>) => {
   return {
     sendMessage: (messageText: string) => {
-      dispatch(sendMessagetCreator(messageText));
+      dispatch(sendMessageCreator(messageText));
     },
   };
 };

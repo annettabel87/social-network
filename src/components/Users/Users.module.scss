@@ -47,16 +47,4 @@
         background-color: rgb(153, 151, 151);        
     }
  }
- .paginationWrapper {
-    display: flex;
-    gap: 10px;
- }
- .paginationBtn {
-    border-radius: 5px;
-    padding: 5px 7px;
-    font-size: 21px;
-    &.selectedPage {
-        font-weight: 600;
-        background-color: #b3c5e9;
-    }
- }
+ 

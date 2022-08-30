@@ -49,15 +49,14 @@ const authReducer = (state: IAuthState = initialState, action: IActionType) => {
   }
 };
 export const getAuthInfo = () => {
-  return (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true));
-    profileAPI.getAuthUserInfo().then((response) => {
-      if (response.resultCode === 0) {
-        const { id, login, email } = response.data;
-        dispatch(setUserData(id, email, login, true));
-      }
-      dispatch(toggleIsFetching(false));
-    });
+    const response = await profileAPI.getAuthUserInfo();
+    if (response.resultCode === 0) {
+      const { id, login, email } = response.data;
+      dispatch(setUserData(id, email, login, true));
+    }
+    dispatch(toggleIsFetching(false));
   };
 };
 export const logIn = (
@@ -66,23 +65,22 @@ export const logIn = (
   rememberMe: boolean,
   setStatus: (status: string) => void
 ) => {
-  return (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
-    profileAPI.login(email, password, rememberMe, setStatus).then((response) => {
-      if (response.resultCode === 0) {
-        dispatch(getAuthInfo());
-      } else {
-        setStatus(response.messages[0]);
-      }
-    });
+  return async (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
+    const response = await profileAPI.login(email, password, rememberMe, setStatus);
+
+    if (response.resultCode === 0) {
+      dispatch(getAuthInfo());
+    } else {
+      setStatus(response.messages[0]);
+    }
   };
 };
 export const logOut = () => {
-  return (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
-    profileAPI.logout().then((response) => {
-      if (response.resultCode === 0) {
-        dispatch(setUserData(null, null, null, false));
-      }
-    });
+  return async (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
+    const response = await profileAPI.logout();
+    if (response.resultCode === 0) {
+      dispatch(setUserData(null, null, null, false));
+    }
   };
 };
 export default authReducer;

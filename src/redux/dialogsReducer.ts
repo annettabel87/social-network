@@ -2,7 +2,7 @@ import { IDialogsState, IActionType } from '../interfaces';
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
-export const sendMessagetCreator = (messageText: string) => ({
+export const sendMessageCreator = (messageText: string) => ({
   type: SEND_MESSAGE,
   messageText: messageText,
 });

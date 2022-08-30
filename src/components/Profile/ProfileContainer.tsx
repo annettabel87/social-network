@@ -3,10 +3,8 @@ import { EmptyObject, compose } from 'redux';
 import { connect } from 'react-redux';
 import {
   IAuthState,
-  IDialogsState,
   IProfileContainerComponentProps,
   IProfileState,
-  IUsersState,
   IWithRouterProps,
 } from '../../interfaces';
 import Profile from './Profile';
@@ -15,9 +13,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const mapState = (
   state: EmptyObject & {
-    dialogsReducer: IDialogsState;
     profileReducer: IProfileState;
-    usersReducer: IUsersState;
     authReducer: IAuthState;
   }
 ) => {

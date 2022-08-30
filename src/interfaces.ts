@@ -201,6 +201,11 @@ export interface IUsersProps {
   toggleFollow: (userId: number, userFollowed: boolean) => void;
   onChangedPage: (page: number) => void;
 }
+export interface IUserProps {
+  user: IUser;
+  followingInProgress: number[];
+  toggleFollow: (userId: number, userFollowed: boolean) => void;
+}
 export interface ILoginData {
   resultCode: number;
   messages: string[];
@@ -228,4 +233,10 @@ export interface IAppComponentProps {
 }
 export interface IAppState {
   initialized: boolean;
+}
+export interface IPaginatorProps {
+  items: number;
+  pageSize: number;
+  currentPage: number;
+  onChangedPage: (page: number) => void;
 }

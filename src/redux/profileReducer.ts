@@ -75,28 +75,25 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
   }
 };
 export const getUserPage = (userId: number) => {
-  return (dispatch: Dispatch) => {
-    profileAPI.getUserPage(userId).then((response) => {
-      dispatch(setUserProfile(response));
-    });
+  return async (dispatch: Dispatch) => {
+    const response = await profileAPI.getUserPage(userId);
+    dispatch(setUserProfile(response));
   };
 };
 
 export const getStatus = (userId: number) => {
-  return (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then((response) => {
-      dispatch(setStatusCreator(response));
-    });
+  return async (dispatch: Dispatch) => {
+    const response = await profileAPI.getStatus(userId);
+    dispatch(setStatusCreator(response));
   };
 };
 
 export const updateStatus = (status: string) => {
-  return (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(setStatusCreator(status));
-      }
-    });
+  return async (dispatch: Dispatch) => {
+    const response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+      dispatch(setStatusCreator(status));
+    }
   };
 };
 export default profileReducer;
