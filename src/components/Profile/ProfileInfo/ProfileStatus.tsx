@@ -21,13 +21,14 @@ const ProfileStatus: FC<IProfileStatusProps> = ({ status, updateStatus }) => {
   return (
     <div className={s.profileStatusWrapper}>
       {!editMode && (
-        <div className={s.profileStatusText} onDoubleClick={activateEditMode}>
+        <div data-testid="status" className={s.profileStatusText} onDoubleClick={activateEditMode}>
           status: {localStatus || '----'}
         </div>
       )}
       {editMode && (
         <div className={s.profileStatusInputWrapper}>
           <input
+            data-testid="statusInput"
             className={s.profileStatusInput}
             autoFocus={true}
             value={localStatus}
