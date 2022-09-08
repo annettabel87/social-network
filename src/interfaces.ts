@@ -70,6 +70,7 @@ export interface IActionType {
   postText?: string;
   messageText?: string;
   postId?: number;
+  photo?: string;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -145,6 +146,7 @@ export interface IWithRouterProps {
   getUserPage: (userId: number) => void;
   getStatus: (userId: number) => void;
   updateStatus: (status: string) => void;
+  savePhoto: (photo: File) => void;
 }
 export interface IProfileContainerComponentProps {
   state: IProfileState;
@@ -190,7 +192,9 @@ export interface IFollowUserData {
 export interface IProfileProps {
   profile: IProfile | null;
   status: string;
+  isAuth: boolean;
   updateStatus: (status: string) => void;
+  savePhoto: (photo: File) => void;
 }
 export interface IUsersProps {
   state: IUser[];
@@ -239,4 +243,12 @@ export interface IPaginatorProps {
   pageSize: number;
   currentPage: number;
   onChangedPage: (page: number) => void;
+}
+export interface ISavePhotoData {
+  resultCode: number;
+  messages: string[];
+  data: {
+    small: string;
+    large: string;
+  };
 }

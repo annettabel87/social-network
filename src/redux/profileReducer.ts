@@ -6,6 +6,7 @@ const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO = 'SAVE_PHOTO';
 
 export const addPostCreator = (postText: string) => ({
   type: ADD_POST,
@@ -23,6 +24,10 @@ export const setStatusCreator = (status: string) => ({
 export const deletePostCreator = (postId: number) => ({
   type: DELETE_POST,
   postId,
+});
+export const savePhotoCreator = (photo: string) => ({
+  type: SAVE_PHOTO,
+  photo: photo,
 });
 const initialState = {
   posts: [
@@ -70,6 +75,15 @@ const profileReducer = (state: IProfileState = initialState, action: IActionType
       };
     }
 
+    case SAVE_PHOTO: {
+      return state.profile !== null
+        ? {
+            ...state,
+            profile: { ...state.profile, photos: { ...state.profile.photos, small: action.photo } },
+          }
+        : { ...state };
+    }
+
     default:
       return state;
   }
@@ -93,6 +107,15 @@ export const updateStatus = (status: string) => {
     const response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
       dispatch(setStatusCreator(status));
+    }
+  };
+};
+
+export const savePhoto = (photo: File) => {
+  return async (dispatch: Dispatch) => {
+    const response = await profileAPI.savePhoto(photo);
+    if (response.resultCode === 0) {
+      dispatch(savePhotoCreator(response.data.small));
     }
   };
 };

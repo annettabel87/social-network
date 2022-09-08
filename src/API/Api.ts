@@ -6,6 +6,7 @@ import {
   ILoginData,
   ILogoutData,
   IProfile,
+  ISavePhotoData,
 } from '../interfaces';
 
 const instance = axios.create({
@@ -58,5 +59,18 @@ export const profileAPI = {
     return instance.delete(`/auth/login`).then((response) => {
       return response.data;
     });
+  },
+  savePhoto(photo: File): Promise<ISavePhotoData> {
+    const formData = new FormData();
+    formData.append('image', photo);
+    return instance
+      .put(`/profile/photo`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        return response.data;
+      });
   },
 };

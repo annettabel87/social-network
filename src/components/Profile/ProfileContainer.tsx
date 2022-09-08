@@ -8,7 +8,7 @@ import {
   IWithRouterProps,
 } from '../../interfaces';
 import Profile from './Profile';
-import { getStatus, getUserPage, updateStatus } from '../../redux/profileReducer';
+import { getStatus, getUserPage, savePhoto, updateStatus } from '../../redux/profileReducer';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const mapState = (
@@ -22,6 +22,7 @@ const mapState = (
     profile: state.profileReducer.profile,
     status: state.profileReducer.status,
     authorizedUserId: state.authReducer.id,
+    isAuth: state.authReducer.isAuth,
   };
 };
 
@@ -29,12 +30,12 @@ export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) =>
   return (props: IProfileContainerComponentProps) => {
     const match = { params: useParams() };
     const navigate = useNavigate();
-    return <Children {...props} params={match.params} navigate={navigate} />;
+    return <Children savePhoto={savePhoto} {...props} params={match.params} navigate={navigate} />;
   };
 };
 
 class ProfileContainer extends React.Component<IWithRouterProps> {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.state.profile?.userId;
     if (!userId) {
       userId = this.props.authorizedUserId;
@@ -45,6 +46,14 @@ class ProfileContainer extends React.Component<IWithRouterProps> {
     this.props.getUserPage(+userId);
     this.props.getStatus(+userId);
   }
+  componentDidMount() {
+    this.refreshProfile();
+  }
+  componentDidUpdate(prevProps: Readonly<IWithRouterProps>) {
+    if (this.props.state.profile?.photos.small !== prevProps.state.profile?.photos.small) {
+      this.refreshProfile();
+    }
+  }
   render() {
     return (
       <Profile
@@ -52,12 +61,14 @@ class ProfileContainer extends React.Component<IWithRouterProps> {
         profile={this.props.state.profile}
         status={this.props.status}
         updateStatus={this.props.updateStatus}
+        savePhoto={this.props.savePhoto}
+        isAuth={this.props.isAuth}
       />
     );
   }
 }
 
 export default compose<React.ComponentType>(
-  connect(mapState, { getUserPage, getStatus, updateStatus }),
+  connect(mapState, { getUserPage, getStatus, updateStatus, savePhoto }),
   withRouter
 )(ProfileContainer);

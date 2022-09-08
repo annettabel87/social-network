@@ -14,3 +14,19 @@
  .description {
     font-size: 24px;
  }
+ .avaBtnWrapper {
+    position: relative;
+    bottom: 125px;
+    height: 50px;
+    text-align: center;
+ }
+ .avaBtn {
+    display: none;
+ }
+ .avaBtnLabel {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 24px;
+    padding: 8px;
+    cursor: pointer;
+ }
