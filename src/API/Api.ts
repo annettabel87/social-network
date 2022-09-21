@@ -3,10 +3,12 @@ import {
   IAuthData,
   IFollowUserData,
   IGetUsersData,
+  IIniialValueProfile,
   ILoginData,
   ILogoutData,
   IProfile,
   ISavePhotoData,
+  ISaveProfileData,
 } from '../interfaces';
 
 const instance = axios.create({
@@ -72,5 +74,10 @@ export const profileAPI = {
       .then((response) => {
         return response.data;
       });
+  },
+  saveProfile(profile: IIniialValueProfile): Promise<ISaveProfileData> {
+    return instance.put(`/profile`, profile).then((response) => {
+      return response.data;
+    });
   },
 };

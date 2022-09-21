@@ -4,9 +4,12 @@ import { IProfileProps } from '../../../interfaces';
 import userPhoto from '../../../assets/user.png';
 import s from './ProfileInfo.module.scss';
 import ProfileStatus from './ProfileStatus';
+import ProfileData from './ProfileData';
+import ProfileDataForm from './ProfileDataForm';
 
 const ProfileInfo: FC<IProfileProps> = React.memo((props) => {
   const [showImg, setShowImg] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const showButton = () => {
     setShowImg(true);
   };
@@ -45,9 +48,20 @@ const ProfileInfo: FC<IProfileProps> = React.memo((props) => {
           )}
         </div>
         <div className={s.description}>
-          <p>{props.profile.fullName}</p>
           <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
-          <p>about Me: {props.profile.aboutMe}</p>
+          {editMode ? (
+            <ProfileDataForm
+              profile={props.profile}
+              setEditMode={() => setEditMode(false)}
+              saveProfile={props.saveProfile}
+            />
+          ) : (
+            <ProfileData
+              profile={props.profile}
+              isAuth={props.isAuth}
+              setEditMode={() => setEditMode(true)}
+            />
+          )}
         </div>
       </div>
     );

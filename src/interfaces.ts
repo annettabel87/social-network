@@ -147,6 +147,7 @@ export interface IWithRouterProps {
   getStatus: (userId: number) => void;
   updateStatus: (status: string) => void;
   savePhoto: (photo: File) => void;
+  saveProfile: (profile: IIniialValueProfile) => void;
 }
 export interface IProfileContainerComponentProps {
   state: IProfileState;
@@ -195,6 +196,7 @@ export interface IProfileProps {
   isAuth: boolean;
   updateStatus: (status: string) => void;
   savePhoto: (photo: File) => void;
+  saveProfile: (profile: IIniialValueProfile) => void;
 }
 export interface IUsersProps {
   state: IUser[];
@@ -251,4 +253,38 @@ export interface ISavePhotoData {
     small: string;
     large: string;
   };
+}
+export interface IProfileDataProps {
+  profile: IProfile;
+  isAuth: boolean;
+  setEditMode: () => void;
+}
+export interface IContactsProps {
+  contactName: string;
+  contactValue: string | null;
+}
+export interface IProfileDataFormProps {
+  profile: IProfile;
+  setEditMode: () => void;
+  saveProfile: (profile: IIniialValueProfile) => void;
+}
+export interface IIniialValueProfile {
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  aboutMe: string;
+  contacts: {
+    github: string;
+    vk: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    website: string;
+    youtube: string;
+    mainLink: string;
+  };
+}
+export interface ISaveProfileData {
+  resultCode: number;
+  messages: string[];
 }

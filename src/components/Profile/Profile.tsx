@@ -13,6 +13,7 @@ const Profile: FC<IProfileProps> = (props) => {
         updateStatus={props.updateStatus}
         savePhoto={props.savePhoto}
         isAuth={props.isAuth}
+        saveProfile={props.saveProfile}
       />
       <MyPostsContainer />
     </section>

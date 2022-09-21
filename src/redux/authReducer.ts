@@ -30,7 +30,7 @@ const initialState = {
   isFetching: false,
   isAuth: false,
 };
-const authReducer = (state: IAuthState = initialState, action: IActionType) => {
+const authReducer = (state: IAuthState = initialState, action: IActionType): IAuthState => {
   switch (action.type) {
     case SET_USER_DATA: {
       return {
@@ -41,7 +41,7 @@ const authReducer = (state: IAuthState = initialState, action: IActionType) => {
     case TOGGLE_IS_FETCHING: {
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.isFetching ? action.isFetching : false,
       };
     }
     default:

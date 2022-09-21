@@ -22,7 +22,7 @@ const ProfileStatus: FC<IProfileStatusProps> = ({ status, updateStatus }) => {
     <div className={s.profileStatusWrapper}>
       {!editMode && (
         <div data-testid="status" className={s.profileStatusText} onDoubleClick={activateEditMode}>
-          status: {localStatus || '----'}
+          <b>status:</b> {localStatus || '----'}
         </div>
       )}
       {editMode && (

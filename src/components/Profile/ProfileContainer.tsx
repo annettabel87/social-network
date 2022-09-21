@@ -8,7 +8,13 @@ import {
   IWithRouterProps,
 } from '../../interfaces';
 import Profile from './Profile';
-import { getStatus, getUserPage, savePhoto, updateStatus } from '../../redux/profileReducer';
+import {
+  getStatus,
+  getUserPage,
+  savePhoto,
+  saveProfile,
+  updateStatus,
+} from '../../redux/profileReducer';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const mapState = (
@@ -30,7 +36,15 @@ export const withRouter = (Children: JSXElementConstructor<IWithRouterProps>) =>
   return (props: IProfileContainerComponentProps) => {
     const match = { params: useParams() };
     const navigate = useNavigate();
-    return <Children savePhoto={savePhoto} {...props} params={match.params} navigate={navigate} />;
+    return (
+      <Children
+        savePhoto={savePhoto}
+        saveProfile={saveProfile}
+        {...props}
+        params={match.params}
+        navigate={navigate}
+      />
+    );
   };
 };
 
@@ -63,12 +77,13 @@ class ProfileContainer extends React.Component<IWithRouterProps> {
         updateStatus={this.props.updateStatus}
         savePhoto={this.props.savePhoto}
         isAuth={this.props.isAuth}
+        saveProfile={this.props.saveProfile}
       />
     );
   }
 }
 
 export default compose<React.ComponentType>(
-  connect(mapState, { getUserPage, getStatus, updateStatus, savePhoto }),
+  connect(mapState, { getUserPage, getStatus, updateStatus, savePhoto, saveProfile }),
   withRouter
 )(ProfileContainer);

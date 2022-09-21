@@ -1,12 +1,15 @@
 import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { profileAPI } from '../API/Api';
-import { IProfileState, IActionType, IPost, IProfile } from '../interfaces';
+import { IProfileState, IActionType, IPost, IProfile, IIniialValueProfile } from '../interfaces';
+import { RootState } from './reduxStore';
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
 const SAVE_PHOTO = 'SAVE_PHOTO';
+const SAVE_PROFILE = 'SAVE_PROFILE';
 
 export const addPostCreator = (postText: string) => ({
   type: ADD_POST,
@@ -28,6 +31,10 @@ export const deletePostCreator = (postId: number) => ({
 export const savePhotoCreator = (photo: string) => ({
   type: SAVE_PHOTO,
   photo: photo,
+});
+export const saveProfileCreator = (profile: IIniialValueProfile) => ({
+  type: SAVE_PROFILE,
+  profile: profile,
 });
 const initialState = {
   posts: [
@@ -116,6 +123,20 @@ export const savePhoto = (photo: File) => {
     const response = await profileAPI.savePhoto(photo);
     if (response.resultCode === 0) {
       dispatch(savePhotoCreator(response.data.small));
+    }
+  };
+};
+export const saveProfile = (profile: IIniialValueProfile) => {
+  return async (
+    dispatch: ThunkDispatch<IProfileState, unknown, IActionType>,
+    getState: () => RootState
+  ) => {
+    const userId = getState()?.authReducer.id;
+    const response = await profileAPI.saveProfile(profile);
+    if (response.resultCode === 0 && !!userId) {
+      if (userId) {
+        dispatch(getUserPage(userId));
+      }
     }
   };
 };

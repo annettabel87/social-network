@@ -30,3 +30,42 @@
     padding: 8px;
     cursor: pointer;
  }
+ .button {
+   background-color: #F2F3F5;
+   border: none;
+   border-radius: 20px;
+   padding: 15px;
+   font-size: 25px;
+ }
+ .contactsForm {
+   padding-left: 15px;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+ }
+ .contactsImg {
+   width: 30px;
+   height: 30px;
+ }
+ .input {
+   background-color: #fefefe;
+   font-size: 21px;
+   padding: 7px;
+   border-radius: 10px;
+   transition: all ease-in-out 0.3s;
+   border: 1px solid #ccc;
+ }
+ .checkboxWrapper {
+   display: flex;
+   gap: 8px;
+ }
+ .errors {    
+   color: red;
+   margin: 10px 0;
+   font-weight: 800;
+ }
+ .form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+ }
