@@ -71,6 +71,7 @@ export interface IActionType {
   messageText?: string;
   postId?: number;
   photo?: string;
+  captchaUrl?: string | null;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -126,6 +127,7 @@ export interface IAuthState {
   login: string | null;
   isFetching: boolean;
   isAuth: boolean;
+  captchaUrl: string | null;
 }
 export interface IAuthContainerProps {
   id: number | null;
@@ -225,9 +227,11 @@ export interface ILoginProps {
     email: string,
     password: string,
     rememberMe: boolean,
-    setStatus: (status: string) => void
+    setStatus: (status: string) => void,
+    captcha: string | null
   ) => void;
   isAuth: boolean;
+  captchaUrl: string | null;
 }
 export interface ILogoutData {
   resultCode: number;

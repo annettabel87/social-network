@@ -3,7 +3,7 @@ import { Field, Form, Formik, FormikValues } from 'formik';
 import { IAuthState, ILoginProps } from '../../interfaces';
 import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
-import { logIn } from '../../redux/authReducer';
+import { getCaptchaUrl, logIn } from '../../redux/authReducer';
 import { connect } from 'react-redux';
 import { EmptyObject } from 'redux';
 
@@ -11,10 +11,12 @@ export interface IInitialValues {
   email: string;
   password: string;
   rememberMe: boolean;
+  captcha: string | null;
 }
 export interface IErrors {
   email?: string;
   password?: string;
+  captcha?: string;
 }
 const mapState = (
   state: EmptyObject & {
@@ -23,6 +25,7 @@ const mapState = (
 ) => {
   return {
     isAuth: state.authReducer.isAuth,
+    captchaUrl: state.authReducer.captchaUrl,
   };
 };
 
@@ -38,11 +41,12 @@ const Login = (props: ILoginProps) => {
   );
 };
 
-const LoginForm: FC<ILoginProps> = ({ logIn }) => {
+const LoginForm: FC<ILoginProps> = ({ logIn, captchaUrl }) => {
   const initialValues: IInitialValues = {
     email: '',
     password: '',
     rememberMe: false,
+    captcha: null,
   };
   const validate = (values: FormikValues) => {
     const errors: IErrors = {};
@@ -63,8 +67,8 @@ const LoginForm: FC<ILoginProps> = ({ logIn }) => {
         initialValues={initialValues}
         validate={(values: FormikValues) => validate(values)}
         onSubmit={(values, { setSubmitting, setStatus }) => {
-          const { email, password, rememberMe } = values;
-          logIn(email, password, rememberMe, setStatus);
+          const { email, password, rememberMe, captcha } = values;
+          logIn(email, password, rememberMe, setStatus, captcha);
           setSubmitting(false);
         }}
       >
@@ -83,6 +87,17 @@ const LoginForm: FC<ILoginProps> = ({ logIn }) => {
               <label htmlFor="rememberMe">Remember me</label>
               <Field type="checkbox" name="rememberMe" id="rememberMe" />
             </div>
+            {captchaUrl && (
+              <>
+                <label htmlFor="captcha">Input captcha</label>
+                <img src={captchaUrl} alt={'captcha'} />
+                <Field type="captcha" name="captcha" id="captcha" className={s.input} />
+                {touched.captcha && errors.captcha && (
+                  <div className={s.errors}>{errors.captcha}</div>
+                )}
+              </>
+            )}
+
             <div className={s.errors}>{status}</div>
             <button type="submit" disabled={isSubmitting} className={s.button}>
               Login
@@ -94,5 +109,5 @@ const LoginForm: FC<ILoginProps> = ({ logIn }) => {
   );
 };
 
-const LoginContainer = connect(mapState, { logIn })(Login);
+const LoginContainer = connect(mapState, { logIn, getCaptchaUrl })(Login);
 export default LoginContainer;

@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { profileAPI } from '../API/Api';
+import { profileAPI, securityAPI } from '../API/Api';
 import { IActionType, IAuthState, IState } from '../interfaces';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
 
 export const setUserData = (
   id: number | null,
@@ -22,6 +23,12 @@ export const toggleIsFetching = (isFetching: boolean) => {
     isFetching: isFetching,
   };
 };
+export const getCaptchaUrlSuccess = (captchaUrl: string | null) => {
+  return {
+    type: GET_CAPTCHA_URL,
+    captchaUrl: captchaUrl,
+  };
+};
 
 const initialState = {
   id: null,
@@ -29,6 +36,7 @@ const initialState = {
   login: null,
   isFetching: false,
   isAuth: false,
+  captchaUrl: null,
 };
 const authReducer = (state: IAuthState = initialState, action: IActionType): IAuthState => {
   switch (action.type) {
@@ -42,6 +50,13 @@ const authReducer = (state: IAuthState = initialState, action: IActionType): IAu
       return {
         ...state,
         isFetching: action.isFetching ? action.isFetching : false,
+      };
+    }
+
+    case GET_CAPTCHA_URL: {
+      return {
+        ...state,
+        captchaUrl: action.captchaUrl ? action.captchaUrl : null,
       };
     }
     default:
@@ -63,24 +78,37 @@ export const logIn = (
   email: string,
   password: string,
   rememberMe: boolean,
-  setStatus: (status: string) => void
+
+  setStatus: (status: string) => void,
+  captcha: string | null
 ) => {
   return async (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
-    const response = await profileAPI.login(email, password, rememberMe, setStatus);
+    const response = await profileAPI.login(email, password, rememberMe, setStatus, captcha);
 
     if (response.resultCode === 0) {
       dispatch(getAuthInfo());
     } else {
-      setStatus(response.messages[0]);
+      if (response.resultCode === 10) {
+        dispatch(getCaptchaUrl());
+      } else {
+        setStatus(response.messages[0]);
+      }
     }
   };
 };
 export const logOut = () => {
-  return async (dispatch: ThunkDispatch<IState, unknown, IActionType>) => {
+  return async (dispatch: Dispatch) => {
     const response = await profileAPI.logout();
     if (response.resultCode === 0) {
       dispatch(setUserData(null, null, null, false));
     }
+  };
+};
+export const getCaptchaUrl = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await securityAPI.getCaptchaUrl();
+    const captchaUrl = response.url;
+    dispatch(getCaptchaUrlSuccess(captchaUrl));
   };
 };
 export default authReducer;

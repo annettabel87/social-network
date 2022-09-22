@@ -49,10 +49,11 @@ export const profileAPI = {
     email: string,
     password: string,
     rememberMe: boolean,
-    setStatus: (status: string) => void
+    setStatus: (status: string) => void,
+    captcha: string | null
   ): Promise<ILoginData> {
     return instance
-      .post(`/auth/login`, { email, password, rememberMe, setStatus })
+      .post(`/auth/login`, { email, password, rememberMe, setStatus, captcha })
       .then((response) => {
         return response.data;
       });
@@ -81,3 +82,15 @@ export const profileAPI = {
     });
   },
 };
+
+export const securityAPI = {
+  getCaptchaUrl(): Promise<ICaptchaUrl> {
+    return instance.get('/security/get-captcha-url').then((response) => {
+      return response.data;
+    });
+  },
+};
+
+export interface ICaptchaUrl {
+  url: string;
+}
