@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { initializedSuccess } from './redux/appReducer';
 import Preloader from './common/Preloader/Preloader';
 import { IAppComponentProps, IAppState } from './interfaces';
@@ -50,6 +50,7 @@ class App extends React.Component<IAppComponentProps> {
               <Route path="settings" element={<Settings />} />
               <Route path="users" element={<UsersContainer />} />
               <Route path="login" element={<Login />} />
+              <Route path="/" element={<Navigate to="/profile" />} />
             </Routes>
           </Suspense>
         </main>
