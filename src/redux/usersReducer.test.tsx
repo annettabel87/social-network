@@ -41,6 +41,10 @@ const initialState = {
   usersCount: 0,
   isFetching: true,
   followingInProgress: [],
+  filter: {
+    term: '',
+    friend: null,
+  },
 };
 test('current page to be correct', () => {
   const action = setCurrentPage(5);

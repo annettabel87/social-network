@@ -3,6 +3,7 @@ import { IUsersProps } from '../../interfaces';
 import s from './Users.module.scss';
 import User from './User';
 import Paginator from '../../common/Paginator/Paginator';
+import UsersSearchForm from './UsersSearchForm';
 
 const Users: FC<IUsersProps> = ({
   state,
@@ -12,9 +13,11 @@ const Users: FC<IUsersProps> = ({
   onChangedPage,
   toggleFollow,
   followingInProgress,
+  onSetFilter,
 }: IUsersProps) => {
   return (
     <div className={s.usersPage}>
+      <UsersSearchForm onSetFilter={onSetFilter} />
       <Paginator
         items={usersCount}
         pageSize={pageSize}

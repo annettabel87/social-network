@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { userAPI } from '../API/Api';
-import { IActionType, IGetUsersData, IUser, IUsersState } from '../interfaces';
+import { IActionType, IFilterData, IGetUsersData, IUser, IUsersState } from '../interfaces';
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -8,6 +8,7 @@ const SET_USERS_COUNT = 'SET_USERS_COUNT';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_FOLLOWING_IN_PROGRESS = 'TOGGLE_FOLLOWING_IN_PROGRESS';
+const SET_FILTER = 'SET_FILTER';
 
 export const toggleFollow = (userId: number) => ({
   type: TOGGLE_FOLLOW,
@@ -37,6 +38,11 @@ export const toggleIsFetching = (isFetching: boolean) => ({
   isFetching,
 });
 
+export const setFilter = (filter: IFilterData) => ({
+  type: TOGGLE_IS_FETCHING,
+  filter,
+});
+
 const initialState: IUsersState = {
   users: [],
   pageSize: 5,
@@ -44,6 +50,10 @@ const initialState: IUsersState = {
   usersCount: 0,
   isFetching: true,
   followingInProgress: [],
+  filter: {
+    term: '',
+    friend: null,
+  },
 };
 const usersReducer = (state: IUsersState = initialState, action: IActionType) => {
   switch (action.type) {
@@ -96,18 +106,26 @@ const usersReducer = (state: IUsersState = initialState, action: IActionType) =>
       };
     }
 
+    case SET_FILTER: {
+      return {
+        ...state,
+        filter: action.filter,
+      };
+    }
+
     default:
       return state;
   }
 };
-export const requestUsers = (currentPage: number, pageSize: number) => {
+export const requestUsers = (currentPage: number, pageSize: number, filter: IFilterData) => {
   return async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching(true));
-    const response: IGetUsersData = await userAPI.getUsers(currentPage, pageSize);
+    const response: IGetUsersData = await userAPI.getUsers(currentPage, pageSize, filter);
     dispatch(toggleIsFetching(false));
     dispatch(setUsers(response.items));
     dispatch(setUsersCount(response.totalCount));
     dispatch(setCurrentPage(currentPage));
+    dispatch(setFilter(filter));
   };
 };
 export const toggleFollowThunk = (userId: number, userFollowed: boolean) => {

@@ -23,3 +23,7 @@ export const getIsFetching = (state: EmptyObject & { usersReducer: IUsersState }
 export const getFollowingInProgress = (state: EmptyObject & { usersReducer: IUsersState }) => {
   return state.usersReducer.followingInProgress;
 };
+
+export const getFilter = (state: EmptyObject & { usersReducer: IUsersState }) => {
+  return state.usersReducer.filter;
+};

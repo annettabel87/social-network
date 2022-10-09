@@ -47,4 +47,26 @@
         background-color: rgb(153, 151, 151);        
     }
  }
- 
+  .form {    
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .input {
+    background-color: #fefefe;
+    font-size: 21px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: all ease-in-out 0.3s;
+    border: 1px solid #ccc;
+  }
+  
+  .button {
+    height: 46px;
+    border-radius: 10px;
+    background-color: #5c5cd8;
+    border: none;
+    font-size: 21px;
+    color: #fff;
+    padding: 5px 20px;
+  }

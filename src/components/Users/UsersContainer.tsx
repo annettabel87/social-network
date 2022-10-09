@@ -1,7 +1,7 @@
 import React from 'react';
 import { EmptyObject } from 'redux';
 import { connect } from 'react-redux';
-import { IUsersContainerComponentProps, IUsersState } from '../../interfaces';
+import { IFilterData, IUsersContainerComponentProps, IUsersState } from '../../interfaces';
 import {
   toggleFollow,
   toggleIsFetching,
@@ -12,6 +12,7 @@ import {
 import Users from './Users';
 import Preloader from '../../common/Preloader/Preloader';
 import {
+  getFilter,
   getFollowingInProgress,
   getIsFetching,
   getPage,
@@ -32,17 +33,20 @@ const mapState = (
     usersCount: getUsersCount(state),
     isFetching: getIsFetching(state),
     followingInProgress: getFollowingInProgress(state),
+    filter: getFilter(state),
   };
 };
 
 class UsersContainerComponent extends React.Component<IUsersContainerComponentProps> {
   componentDidMount() {
-    this.props.requestUsers(this.props.currentPage, this.props.pageSize);
+    this.props.requestUsers(this.props.currentPage, this.props.pageSize, this.props.filter);
   }
   onChangedPage = (pageNumber: number) => {
-    this.props.requestUsers(pageNumber, this.props.pageSize);
+    this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter);
   };
-
+  onSetFilter = (filter: IFilterData) => {
+    this.props.requestUsers(1, this.props.pageSize, filter);
+  };
   render() {
     return (
       <>
@@ -57,6 +61,7 @@ class UsersContainerComponent extends React.Component<IUsersContainerComponentPr
             toggleFollow={this.props.toggleFollowThunk}
             onChangedPage={this.onChangedPage}
             followingInProgress={this.props.followingInProgress}
+            onSetFilter={this.onSetFilter}
           />
         )}
       </>

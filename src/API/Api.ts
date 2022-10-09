@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   IAuthData,
+  IFilterData,
   IFollowUserData,
   IGetUsersData,
   IIniialValueProfile,
@@ -20,9 +21,13 @@ const instance = axios.create({
 });
 
 export const userAPI = {
-  getUsers(currentPage: number, pageSize: number): Promise<IGetUsersData> {
+  getUsers(currentPage: number, pageSize: number, filter: IFilterData): Promise<IGetUsersData> {
     return instance
-      .get(`users?count=${pageSize}&page=${currentPage}`)
+      .get(
+        `users?count=${pageSize}&page=${currentPage}&term=${filter.term}&friend=${
+          filter.friend === null ? '' : filter.friend
+        }`
+      )
       .then((response) => response.data as IGetUsersData);
   },
   followUser(userId: number): Promise<IFollowUserData> {

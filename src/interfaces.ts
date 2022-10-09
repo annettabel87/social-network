@@ -72,6 +72,7 @@ export interface IActionType {
   postId?: number;
   photo?: string;
   captchaUrl?: string | null;
+  filter?: IFilterData;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -107,6 +108,7 @@ export interface IUsersState {
   usersCount: number;
   isFetching: boolean;
   followingInProgress: number[];
+  filter: IFilterData;
 }
 export interface IUser {
   name: string;
@@ -167,10 +169,11 @@ export interface IUsersContainerComponentProps {
   usersCount: number;
   isFetching: boolean;
   followingInProgress: number[];
+  filter: IFilterData;
   toggleFollowThunk: (userId: number, userFollowed: boolean) => void;
   toggleIsFetching: (isFetching: boolean) => void;
   toggleIsFollowingInProgress: (userId: number, isFetching: boolean) => void;
-  requestUsers: (currentPage: number, pageSize: number) => void;
+  requestUsers: (currentPage: number, pageSize: number, filter: IFilterData) => void;
 }
 export interface IMapStateAuth {
   isAuth: boolean;
@@ -192,6 +195,10 @@ export interface IFollowUserData {
   messages: string[];
   resultCode: number;
 }
+export interface IFilterData {
+  term: string;
+  friend: null | boolean;
+}
 export interface IProfileProps {
   profile: IProfile | null;
   status: string;
@@ -208,6 +215,7 @@ export interface IUsersProps {
   followingInProgress: number[];
   toggleFollow: (userId: number, userFollowed: boolean) => void;
   onChangedPage: (page: number) => void;
+  onSetFilter: (filter: IFilterData) => void;
 }
 export interface IUserProps {
   user: IUser;
