@@ -1,6 +1,7 @@
-import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { userAPI } from '../API/Api';
 import { IActionType, IFilterData, IGetUsersData, IUser, IUsersState } from '../interfaces';
+import { RootState } from './reduxStore';
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -117,8 +118,12 @@ const usersReducer = (state: IUsersState = initialState, action: IActionType) =>
       return state;
   }
 };
-export const requestUsers = (currentPage: number, pageSize: number, filter: IFilterData) => {
-  return async (dispatch: Dispatch) => {
+export const requestUsers = (
+  currentPage: number,
+  pageSize: number,
+  filter: IFilterData
+): ThunkAction<void, RootState, unknown, IActionType> => {
+  return async (dispatch) => {
     dispatch(toggleIsFetching(true));
     const response: IGetUsersData = await userAPI.getUsers(currentPage, pageSize, filter);
     dispatch(toggleIsFetching(false));
@@ -128,8 +133,11 @@ export const requestUsers = (currentPage: number, pageSize: number, filter: IFil
     dispatch(setFilter(filter));
   };
 };
-export const toggleFollowThunk = (userId: number, userFollowed: boolean) => {
-  return async (dispatch: Dispatch) => {
+export const toggleFollowThunk = (
+  userId: number,
+  userFollowed: boolean
+): ThunkAction<void, RootState, unknown, IActionType> => {
+  return async (dispatch) => {
     if (!userFollowed) {
       dispatch(toggleIsFollowingInProgress(userId, true));
       const response = await userAPI.followUser(userId);

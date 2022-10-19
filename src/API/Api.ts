@@ -21,12 +21,11 @@ const instance = axios.create({
 });
 
 export const userAPI = {
-  getUsers(currentPage: number, pageSize: number, filter: IFilterData): Promise<IGetUsersData> {
+  getUsers(currentPage = 1, pageSize = 5, filter: IFilterData): Promise<IGetUsersData> {
     return instance
       .get(
-        `users?count=${pageSize}&page=${currentPage}&term=${filter.term}&friend=${
-          filter.friend === null ? '' : filter.friend
-        }`
+        `users?count=${pageSize}&page=${currentPage}&term=${filter.term}` +
+          (filter.friend === null ? '' : `&friend=${filter.friend}`)
       )
       .then((response) => response.data as IGetUsersData);
   },

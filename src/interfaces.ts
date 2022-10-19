@@ -208,14 +208,7 @@ export interface IProfileProps {
   saveProfile: (profile: IIniialValueProfile) => void;
 }
 export interface IUsersProps {
-  state: IUser[];
-  pageSize: number;
-  currentPage: number;
-  usersCount: number;
-  followingInProgress: number[];
   toggleFollow: (userId: number, userFollowed: boolean) => void;
-  onChangedPage: (page: number) => void;
-  onSetFilter: (filter: IFilterData) => void;
 }
 export interface IUserProps {
   user: IUser;
