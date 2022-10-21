@@ -15,12 +15,11 @@ const UsersSearchForm: FC<IUserSearchFormProps> = ({ onSetFilter }) => {
     term: '',
     friend: 'null',
   };
-  const resetFilter = () => {
-    onSetFilter({ term: '', friend: null });
-  };
+
   return (
     <div className={s.UsersSearchForm}>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
           const { term, friend } = values;
@@ -28,12 +27,12 @@ const UsersSearchForm: FC<IUserSearchFormProps> = ({ onSetFilter }) => {
             term,
             friend: friend === 'null' ? null : friend === 'true' ? true : false,
           };
-          console.log(filterData);
+
           onSetFilter(filterData);
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting, touched, errors }) => (
+        {({ isSubmitting, touched, errors, resetForm }) => (
           <Form className={s.form}>
             <Field type="text" name="term" id="term" className={s.input} />
             {touched.term && errors.term && <div className={s.errors}>{errors.term}</div>}
@@ -48,7 +47,7 @@ const UsersSearchForm: FC<IUserSearchFormProps> = ({ onSetFilter }) => {
             <button type="submit" disabled={isSubmitting} className={s.button}>
               Find
             </button>
-            <button disabled={isSubmitting} className={s.button} onClick={resetFilter}>
+            <button disabled={isSubmitting} className={s.button} onClick={() => resetForm()}>
               reset
             </button>
           </Form>

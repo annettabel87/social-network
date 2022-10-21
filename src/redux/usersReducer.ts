@@ -40,7 +40,7 @@ export const toggleIsFetching = (isFetching: boolean) => ({
 });
 
 export const setFilter = (filter: IFilterData) => ({
-  type: TOGGLE_IS_FETCHING,
+  type: SET_FILTER,
   filter,
 });
 
@@ -125,12 +125,12 @@ export const requestUsers = (
 ): ThunkAction<void, RootState, unknown, IActionType> => {
   return async (dispatch) => {
     dispatch(toggleIsFetching(true));
+    dispatch(setCurrentPage(currentPage));
+    dispatch(setFilter(filter));
     const response: IGetUsersData = await userAPI.getUsers(currentPage, pageSize, filter);
     dispatch(toggleIsFetching(false));
     dispatch(setUsers(response.items));
     dispatch(setUsersCount(response.totalCount));
-    dispatch(setCurrentPage(currentPage));
-    dispatch(setFilter(filter));
   };
 };
 export const toggleFollowThunk = (

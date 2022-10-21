@@ -16,7 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestUsers, toggleFollowThunk } from '../../redux/usersReducer';
 import { RootState } from '../../redux/reduxStore';
 import { ThunkDispatch } from 'redux-thunk';
-
+import { useSearchParams } from 'react-router-dom';
+type QueryParamsType = { term?: string; page?: string; friend?: string };
 const Users: FC = () => {
   const usersCount = useSelector(getUsersCount);
   const pageSize = useSelector(getPageSize);
@@ -25,16 +26,48 @@ const Users: FC = () => {
   const followingInProgress = useSelector(getFollowingInProgress);
   const filter = useSelector(getFilter);
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, IActionType>>();
+
   useEffect(() => {
-    dispatch(requestUsers(currentPage, pageSize, filter));
+    let actualPage = currentPage;
+    let actualFilter = filter;
+
+    if (searchParams.has('page')) {
+      actualPage = +(searchParams.get('page') as string);
+    }
+    if (searchParams.has('term')) {
+      actualFilter = { ...actualFilter, term: searchParams.get('term') as string };
+    }
+    switch (searchParams.get('friend')) {
+      case 'null':
+        actualFilter = { ...actualFilter, friend: null };
+        break;
+      case 'true':
+        actualFilter = { ...actualFilter, friend: true };
+        break;
+      case 'false':
+        actualFilter = { ...actualFilter, friend: false };
+        break;
+    }
+    dispatch(requestUsers(actualPage, pageSize, actualFilter));
   }, []);
+
+  useEffect(() => {
+    const query: QueryParamsType = {};
+
+    if (!!filter.term) query.term = filter.term;
+    if (filter.friend !== null) query.friend = String(filter.friend);
+    if (currentPage !== 1) query.page = String(currentPage);
+
+    setSearchParams(query);
+  }, [filter, currentPage]);
   const onChangedPage = (pageNumber: number): void => {
     dispatch(requestUsers(pageNumber, pageSize, filter));
   };
 
-  const onSetFilter = (filter: IFilterData) => {
-    dispatch(requestUsers(1, pageSize, filter));
+  const onSetFilter = (filterData: IFilterData) => {
+    dispatch(requestUsers(1, pageSize, filterData));
   };
 
   const toggleFollow = (userId: number, userFollowed: boolean) => {
