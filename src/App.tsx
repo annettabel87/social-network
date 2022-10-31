@@ -12,6 +12,7 @@ const Settings = lazy(() => import('./components/Settings/Settings'));
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
+const ChatContainer = lazy(() => import('./components/Chat/ChatPage'));
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 
@@ -50,6 +51,7 @@ class App extends React.Component<IAppComponentProps> {
               <Route path="settings" element={<Settings />} />
               <Route path="users" element={<UsersContainer />} />
               <Route path="login" element={<Login />} />
+              <Route path="chat" element={<ChatContainer />} />
               <Route path="/" element={<Navigate to="/profile" />} />
             </Routes>
           </Suspense>

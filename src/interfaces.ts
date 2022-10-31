@@ -1,5 +1,6 @@
 import { NavigateFunction, Params } from 'react-router-dom';
 import { Store, EmptyObject } from 'redux';
+import { ChatMessageType } from './redux/chatReducer';
 
 export interface IProfileState {
   posts: IPost[];
@@ -73,6 +74,30 @@ export interface IActionType {
   photo?: string;
   captchaUrl?: string | null;
   filter?: IFilterData;
+  messages?: IChatMessages[];
+  statusWs?: StatusType;
+}
+export interface IChatActionType {
+  type: string;
+  newText?: string;
+  body?: string;
+  userId?: number;
+  users?: IUser[];
+  usersCount?: number;
+  currentPage?: number;
+  isFetching?: boolean;
+  profile?: IProfile;
+  data?: IUserData;
+  status?: string;
+  isAuth?: boolean;
+  postText?: string;
+  messageText?: string;
+  postId?: number;
+  photo?: string;
+  captchaUrl?: string | null;
+  filter?: IFilterData;
+  messages?: IChatMessages[];
+  statusWs?: StatusType;
 }
 export interface IDialogsProps {
   state: IDialogsState;
@@ -130,6 +155,10 @@ export interface IAuthState {
   isFetching: boolean;
   isAuth: boolean;
   captchaUrl: string | null;
+}
+export interface IChatState {
+  messages: ChatMessageType[];
+  statusWs: StatusType;
 }
 export interface IAuthContainerProps {
   id: number | null;
@@ -293,3 +322,13 @@ export interface ISaveProfileData {
   resultCode: number;
   messages: string[];
 }
+export interface IChatMessages {
+  message: string;
+  photo: string;
+  userId: number;
+  userName: string;
+}
+export type MessagesReceivedSubscriberType = (messages: IChatMessages[]) => void;
+export type StatusChangedSubscriberType = (statusWs: StatusType) => void;
+export type StatusType = 'pending' | 'ready' | 'error';
+export type EventsNamesType = 'messages-received' | 'status-changed';

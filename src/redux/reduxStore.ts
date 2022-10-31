@@ -5,6 +5,7 @@ import authReducer from './authReducer';
 import dialogsReducer from './dialogsReducer';
 import profileReducer from './profileReducer';
 import usersReducer from './usersReducer';
+import chatReducer from './chatReducer';
 
 const rootReducer = combineReducers({
   dialogsReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   usersReducer,
   authReducer,
   appReducer,
+  chatReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

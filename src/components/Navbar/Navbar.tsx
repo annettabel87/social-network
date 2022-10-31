@@ -5,6 +5,7 @@ import news from '../../assets/news.svg';
 import music from '../../assets/music.svg';
 import settings from '../../assets/settings.svg';
 import friends from '../../assets/friends.png';
+import chat from '../../assets/chat.png';
 import s from './Navbar.module.scss';
 import { NavLink } from 'react-router-dom';
 
@@ -46,6 +47,10 @@ const Navbar: FC = () => {
           <NavLink to="/users" className={`${s.link} ${s.users}`}>
             <img src={friends} alt="users" className={s.icon} />
             <p>Users</p>
+          </NavLink>
+          <NavLink to="/chat" className={`${s.link} ${s.chat}`}>
+            <img src={chat} alt="chat" className={s.icon} />
+            <p>Chat</p>
           </NavLink>
         </li>
       </ul>
